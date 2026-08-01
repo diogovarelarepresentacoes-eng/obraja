@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ObraJá — Home Consumidor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:#B0B0B0;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:16px}
+.label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#555}
+.phone{width:375px;height:812px;background:#fff;border-radius:48px;box-shadow:0 32px 80px rgba(0,0,0,.45);overflow:hidden;display:flex;flex-direction:column;border:8px solid #1A1A1A}
+/* Status */
+.sb{background:#fff;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0}
+.sb-t{font-size:15px;font-weight:700;color:#1A1A1A}
+.sb-r{display:flex;align-items:center;gap:6px}
+/* Header */
+.hdr{background:#1A1A1A;padding:10px 20px 14px;flex-shrink:0}
+.hdr-row{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:900;letter-spacing:-.5px}
+.logo .o{color:#fff}.logo .j{color:#F1591D}
+.loc-lbl{font-size:10px;color:rgba(255,255,255,.45);margin-bottom:1px}
+.loc-val{font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:4px}
+.cart{width:40px;height:40px;background:rgba(241,89,29,.15);border:1px solid rgba(241,89,29,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative}
+.cart-n{position:absolute;top:-5px;right:-5px;width:17px;height:17px;background:#F1591D;border-radius:50%;font-size:9px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid #1A1A1A}
+/* Search */
+.srch-wrap{background:#1A1A1A;padding:0 20px 14px;flex-shrink:0}
+.srch{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:10px}
+.srch-ph{font-size:14px;color:rgba(255,255,255,.35);flex:1}
+.srch-btn{background:#F1591D;color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:7px;white-space:nowrap}
+/* Content scroll */
+.scroll{flex:1;overflow-y:auto;background:#fff}
+.scroll::-webkit-scrollbar{display:none}
+/* Section header */
+.sh{display:flex;justify-content:space-between;align-items:center;padding:0 20px;margin-bottom:12px}
+.sh-t{font-size:15px;font-weight:800;color:#1A1A1A}
+.sh-l{font-size:12px;font-weight:700;color:#F1591D}
+/* Categories */
+.cats{display:flex;gap:12px;overflow-x:auto;padding:0 20px 2px;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.cat-ic{width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.cat-nm{font-size:10px;font-weight:700;color:#1A1A1A;text-align:center}
+/* Banner */
+.banner{margin:18px 20px;border-radius:14px;background:linear-gradient(128deg,#F1591D 0%,#AA3C0E 100%);padding:20px 18px;position:relative;overflow:hidden}
+.banner::after{content:'';position:absolute;width:120px;height:120px;background:rgba(255,255,255,.07);border-radius:50%;right:-20px;top:-30px}
+.bn-tag{font-size:10px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.bn-title{font-size:22px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:5px}
+.bn-sub{font-size:11px;color:rgba(255,255,255,.75);margin-bottom:14px;line-height:1.4}
+.bn-cta{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#F1591D;font-size:12px;font-weight:800;padding:8px 14px;border-radius:8px;position:relative;z-index:1}
+.bn-dots{display:flex;gap:5px;margin-top:14px}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35)}
+.dot.a{background:#fff;width:18px;border-radius:3px}
+/* Stores */
+.stores{display:flex;gap:12px;overflow-x:auto;padding:0 20px 2px;scrollbar-width:none}
+.stores::-webkit-scrollbar{display:none}
+.sc{flex-shrink:0;width:170px;border-radius:12px;overflow:hidden;border:1px solid #EFEFEF}
+.sc-cov{height:78px;display:flex;align-items:center;justify-content:center;position:relative}
+.sc-badge{position:absolute;top:8px;right:8px;background:#F1591D;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
+.sc-av{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;color:#fff}
+.sc-info{padding:10px 12px 12px}
+.sc-name{font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-meta{display:flex;align-items:center;gap:4px;font-size:10px;color:#9E9E9E}
+.sc-star{color:#F1591D;font-weight:700;color:#1A1A1A}
+/* Products */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px 110px}
+.pc{border-radius:12px;overflow:hidden;border:1px solid #EFEFEF}
+.pc-img{height:106px;display:flex;align-items:center;justify-content:center;font-size:38px;position:relative}
+.pc-off{position:absolute;top:8px;left:8px;background:#F1591D;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:5px}
+.pc-body{padding:10px}
+.pc-name{font-size:11px;font-weight:700;color:#1A1A1A;line-height:1.35;margin-bottom:3px}
+.pc-unit{font-size:9px;color:#9E9E9E;margin-bottom:6px}
+.pc-pr{font-size:16px;font-weight:900;color:#F1591D}
+.pc-old{font-size:10px;color:#9E9E9E;text-decoration:line-through}
+.pc-store{font-size:9px;color:#9E9E9E;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-add{width:28px;height:28px;background:#F1591D;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;float:right;margin-top:-22px;flex-shrink:0}
+/* Bottom Nav */
+.bnav{background:#fff;border-top:1.5px solid #F2F2F2;display:flex;padding:10px 0 20px;flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.nb-lbl{font-size:9px;font-weight:700;color:#9E9E9E}
+.nb.active .nb-lbl{color:#F1591D}
+.nb-dot{width:4px;height:4px;border-radius:50%;background:#F1591D}
+/* SVG icon */
+svg{display:block}
+</style>
+</head>
+<body>
+<span class="label">ObraJá · Home do Consumidor · Mobile 375×812</span>
+<div class="phone">
+
+  <!-- Status Bar -->
+  <div class="sb">
+    <span class="sb-t">9:41</span>
+    <div class="sb-r">
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="#1A1A1A">
+        <rect x="0" y="5" width="2.5" height="6" rx="1"/><rect x="4" y="3" width="2.5" height="8" rx="1"/>
+        <rect x="8" y="1" width="2.5" height="10" rx="1"/><rect x="12" y="0" width="2.5" height="11" rx="1" opacity=".3"/>
+      </svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+        <path d="M7.5 9a1.5 1.5 0 100 2 1.5 1.5 0 000-2z" fill="#1A1A1A"/>
+        <path d="M3.5 6a5.97 5.97 0 018 0" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M.5 3.5a9.97 9.97 0 0114 0" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" opacity=".4"/>
+      </svg>
+      <div style="display:flex;align-items:center;gap:1px">
+        <div style="width:20px;height:11px;border:1.5px solid #1A1A1A;border-radius:3px;padding:1.5px">
+          <div style="background:#1A1A1A;height:100%;width:85%;border-radius:1px"></div>
+        </div>
+        <div style="width:2px;height:6px;background:#1A1A1A;border-radius:0 1px 1px 0;opacity:.6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-row">
+      <div>
+        <div class="loc-lbl">Entregar em</div>
+        <div class="loc-val">
+          Rua das Flores, 142
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="#F1591D"><path d="M0 0l5 6 5-6z"/></svg>
+        </div>
+      </div>
+      <div class="logo"><span class="o">Obra</span><span class="j">Já</span></div>
+      <div class="cart">
+        <svg width="20" height="20" fill="none" stroke="#F1591D" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <div class="cart-n">3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="srch-wrap">
+    <div class="srch">
+      <svg width="16" height="16" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <span class="srch-ph">Buscar produtos, lojas...</span>
+      <span class="srch-btn">Filtrar</span>
+    </div>
+  </div>
+
+  <!-- Scroll area -->
+  <div class="scroll">
+
+    <!-- Categories -->
+    <div style="padding:18px 0 0">
+      <div class="sh"><span class="sh-t">Categorias</span><span class="sh-l">Ver todas →</span></div>
+      <div class="cats">
+        <div class="cat"><div class="cat-ic" style="background:#FFF0E8">⚡</div><span class="cat-nm">Elétrica</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#E8F4FF">💧</div><span class="cat-nm">Hidráulica</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#F2F2F2">🧱</div><span class="cat-nm">Cimento</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#FFF8E8">🪵</div><span class="cat-nm">Madeira</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#F2F2F2">🔩</div><span class="cat-nm">Ferragens</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#F0FFF4">🎨</div><span class="cat-nm">Tintas</span></div>
+        <div class="cat"><div class="cat-ic" style="background:#F8F0FF">🪟</div><span class="cat-nm">Esquadrias</span></div>
+      </div>
+    </div>
+
+    <!-- Banner Promo -->
+    <div class="banner">
+      <div class="bn-tag">Oferta da semana</div>
+      <div class="bn-title">Cimento até<br>25% OFF</div>
+      <div class="bn-sub">Votorantim, Itambé, Lafarge — entrega no dia</div>
+      <div class="bn-cta">Ver ofertas
+        <svg width="13" height="13" fill="none" stroke="#F1591D" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </div>
+      <div class="bn-dots"><div class="dot a"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+
+    <!-- Lojas Próximas -->
+    <div style="padding:0 0 16px">
+      <div class="sh"><span class="sh-t">Lojas Próximas</span><span class="sh-l">Ver todas →</span></div>
+      <div class="stores">
+        <div class="sc">
+          <div class="sc-cov" style="background:#222">
+            <div class="sc-badge">Aberta</div>
+            <div class="sc-av" style="background:#F1591D">MB</div>
+          </div>
+          <div class="sc-info">
+            <div class="sc-name">Materiais Belo</div>
+            <div class="sc-meta"><span class="sc-star">★ 4.8</span>&nbsp;· 1.2 km · ~25 min</div>
+          </div>
+        </div>
+        <div class="sc">
+          <div class="sc-cov" style="background:#2D2D2D">
+            <div class="sc-badge" style="background:#22C55E">Aberta</div>
+            <div class="sc-av" style="background:#1A1A1A">CS</div>
+          </div>
+          <div class="sc-info">
+            <div class="sc-name">Construfácil Sul</div>
+            <div class="sc-meta"><span class="sc-star">★ 4.6</span>&nbsp;· 2.0 km · ~35 min</div>
+          </div>
+        </div>
+        <div class="sc">
+          <div class="sc-cov" style="background:#333">
+            <div class="sc-badge">Aberta</div>
+            <div class="sc-av" style="background:#F1591D">DM</div>
+          </div>
+          <div class="sc-info">
+            <div class="sc-name">DepósitoMax</div>
+            <div class="sc-meta"><span class="sc-star">★ 4.5</span>&nbsp;· 3.1 km · ~45 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mais Vendidos -->
+    <div style="padding:0 0 8px">
+      <div class="sh"><span class="sh-t">Mais Vendidos</span><span class="sh-l">Ver todos →</span></div>
+      <div class="pg">
+        <div class="pc">
+          <div class="pc-img" style="background:#EEE">🏗️<div class="pc-off">-20%</div></div>
+          <div class="pc-body">
+            <div class="pc-name">Cimento CP-II 50kg Votorantim</div>
+            <div class="pc-unit">por saco (50 kg)</div>
+            <div class="pc-pr">R$ 32,90</div>
+            <div class="pc-old">R$ 41,00</div>
+            <div class="pc-store">Materiais Belo</div>
+            <div class="pc-add">+</div>
+          </div>
+        </div>
+        <div class="pc">
+          <div class="pc-img" style="background:#EEF4FF">⚡</div>
+          <div class="pc-body">
+            <div class="pc-name">Fio Elétrico 2,5mm 100m Prysmian</div>
+            <div class="pc-unit">por rolo (100 m)</div>
+            <div class="pc-pr">R$ 189,00</div>
+            <div class="pc-store">Construfácil Sul</div>
+            <div class="pc-add">+</div>
+          </div>
+        </div>
+        <div class="pc">
+          <div class="pc-img" style="background:#FFF0EC">🪣<div class="pc-off">-15%</div></div>
+          <div class="pc-body">
+            <div class="pc-name">Tinta Acrílica 18L Coral Branco</div>
+            <div class="pc-unit">por lata (18 L)</div>
+            <div class="pc-pr">R$ 219,90</div>
+            <div class="pc-old">R$ 259,00</div>
+            <div class="pc-store">DepósitoMax</div>
+            <div class="pc-add">+</div>
+          </div>
+        </div>
+        <div class="pc">
+          <div class="pc-img" style="background:#EEE">🔩</div>
+          <div class="pc-body">
+            <div class="pc-name">Vergalhão CA-50 10mm 12m</div>
+            <div class="pc-unit">por barra (12 m)</div>
+            <div class="pc-pr">R$ 54,50</div>
+            <div class="pc-store">Materiais Belo</div>
+            <div class="pc-add">+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+
+  <!-- Bottom Nav -->
+  <div class="bnav">
+    <div class="nb active">
+      <svg width="22" height="22" fill="#F1591D" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      <span class="nb-lbl" style="color:#F1591D">Início</span>
+      <div class="nb-dot"></div>
+    </div>
+    <div class="nb">
+      <svg width="22" height="22" fill="none" stroke="#9E9E9E" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <span class="nb-lbl">Buscar</span>
+    </div>
+    <div class="nb">
+      <svg width="22" height="22" fill="none" stroke="#9E9E9E" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+        <path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+      </svg>
+      <span class="nb-lbl">Pedidos</span>
+    </div>
+    <div class="nb">
+      <svg width="22" height="22" fill="none" stroke="#9E9E9E" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span class="nb-lbl">Perfil</span>
+    </div>
+  </div>
+
+</div><!-- /phone -->
+</body>
+</html>

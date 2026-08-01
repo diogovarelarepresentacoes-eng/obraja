@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ObraJá — Checkout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;background:#B0B0B0;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:16px}
+.label{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#555}
+.phone{width:375px;height:812px;background:#F2F2F2;border-radius:48px;box-shadow:0 32px 80px rgba(0,0,0,.45);overflow:hidden;display:flex;flex-direction:column;border:8px solid #1A1A1A}
+/* Status */
+.sb{background:#fff;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0}
+.sb-t{font-size:15px;font-weight:700;color:#1A1A1A}
+.sb-r{display:flex;align-items:center;gap:6px}
+/* Topbar */
+.topbar{background:#fff;padding:12px 20px 14px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #EFEFEF;flex-shrink:0}
+.back{width:36px;height:36px;background:#F2F2F2;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-title{font-size:18px;font-weight:900;color:#1A1A1A;flex:1}
+.topbar-steps{font-size:11px;font-weight:600;color:#9E9E9E}
+/* Progress */
+.prog{background:#fff;padding:0 20px 14px;flex-shrink:0}
+.prog-bar{height:4px;background:#F2F2F2;border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;width:66%;background:#F1591D;border-radius:2px}
+/* Scroll */
+.scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:0 0 8px}
+.scroll::-webkit-scrollbar{display:none}
+/* Card section */
+.card{background:#fff;border-radius:14px;margin:0 12px;overflow:hidden}
+.card-hdr{padding:14px 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F2F2F2}
+.card-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-title{font-size:14px;font-weight:800;color:#1A1A1A}
+.card-body{padding:14px 16px}
+/* Cart items */
+.item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F2F2F2}
+.item:last-child{border-bottom:none;padding-bottom:0}
+.item-img{width:48px;height:48px;border-radius:10px;background:#F2F2F2;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.item-name{font-size:12px;font-weight:700;color:#1A1A1A;line-height:1.3}
+.item-unit{font-size:10px;color:#9E9E9E;margin-top:2px}
+.item-right{margin-left:auto;text-align:right}
+.item-qty{display:flex;align-items:center;gap:8px;justify-content:flex-end;margin-bottom:4px}
+.qty-btn{width:24px;height:24px;border-radius:6px;border:1.5px solid #E0E0E0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#1A1A1A}
+.qty-n{font-size:14px;font-weight:700;color:#1A1A1A}
+.item-price{font-size:14px;font-weight:800;color:#F1591D}
+/* Delivery options */
+.del-opt{display:flex;flex-direction:column;gap:10px}
+.dopt{border:2px solid #F2F2F2;border-radius:12px;padding:14px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.15s}
+.dopt.sel{border-color:#F1591D;background:#FFF8F6}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid #E0E0E0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.radio.sel{border-color:#F1591D}
+.radio-inner{width:10px;height:10px;border-radius:50%;background:#F1591D}
+.dopt-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.dopt-title{font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:3px}
+.dopt-sub{font-size:11px;color:#9E9E9E;line-height:1.4}
+.dopt-price{font-size:13px;font-weight:800;color:#1A1A1A;margin-left:auto;white-space:nowrap;padding-top:2px}
+/* Address */
+.addr{border:1.5px solid #F2F2F2;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px}
+.addr-ic{width:36px;height:36px;background:#FFF0E8;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.addr-main{font-size:13px;font-weight:700;color:#1A1A1A}
+.addr-sub{font-size:11px;color:#9E9E9E;margin-top:2px}
+.addr-change{font-size:12px;font-weight:700;color:#F1591D;margin-left:auto;white-space:nowrap}
+/* Payment */
+.pay-opts{display:flex;gap:8px}
+.po{flex:1;border:2px solid #F2F2F2;border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer}
+.po.sel{border-color:#F1591D;background:#FFF8F6}
+.po-icon{font-size:22px}
+.po-lbl{font-size:11px;font-weight:700;color:#1A1A1A;text-align:center}
+.po-desc{font-size:9px;color:#9E9E9E;text-align:center}
+.po.sel .po-lbl{color:#F1591D}
+/* Pix details */
+.pix-box{margin-top:12px;background:#F8FFF8;border:1.5px solid #86EFAC;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.pix-qr{width:48px;height:48px;border-radius:8px;background:#fff;border:1.5px solid #86EFAC;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.pix-title{font-size:12px;font-weight:700;color:#15803D;margin-bottom:3px}
+.pix-sub{font-size:10px;color:#16A34A;line-height:1.4}
+/* Summary */
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F2F2F2}
+.sum-row:last-child{border-bottom:none;padding-bottom:0}
+.sum-lbl{font-size:13px;color:#9E9E9E}
+.sum-val{font-size:13px;font-weight:600;color:#1A1A1A}
+.sum-row.total .sum-lbl{font-size:15px;font-weight:800;color:#1A1A1A}
+.sum-row.total .sum-val{font-size:18px;font-weight:900;color:#F1591D}
+.sum-row.disc .sum-val{color:#22C55E}
+/* CTA */
+.cta-wrap{background:#fff;padding:14px 20px 24px;flex-shrink:0;border-top:2px solid #F2F2F2}
+.cta-info{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.cta-lbl{font-size:12px;color:#9E9E9E;font-weight:600}
+.cta-val{font-size:22px;font-weight:900;color:#1A1A1A}
+.cta-btn{width:100%;background:#F1591D;color:#fff;border:none;border-radius:14px;padding:17px;font-size:16px;font-weight:800;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;letter-spacing:.2px}
+.cta-btn:hover{background:#D14E18}
+svg{display:block}
+</style>
+</head>
+<body>
+<span class="label">ObraJá · Checkout · Mobile 375×812</span>
+<div class="phone">
+
+  <!-- Status Bar -->
+  <div class="sb">
+    <span class="sb-t">9:41</span>
+    <div class="sb-r">
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="#1A1A1A">
+        <rect x="0" y="5" width="2.5" height="6" rx="1"/><rect x="4" y="3" width="2.5" height="8" rx="1"/>
+        <rect x="8" y="1" width="2.5" height="10" rx="1"/><rect x="12" y="0" width="2.5" height="11" rx="1" opacity=".3"/>
+      </svg>
+      <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+        <path d="M7.5 9a1.5 1.5 0 100 2 1.5 1.5 0 000-2z" fill="#1A1A1A"/>
+        <path d="M3.5 6a5.97 5.97 0 018 0" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div style="display:flex;align-items:center;gap:1px">
+        <div style="width:20px;height:11px;border:1.5px solid #1A1A1A;border-radius:3px;padding:1.5px">
+          <div style="background:#1A1A1A;height:100%;width:85%;border-radius:1px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="back">
+      <svg width="16" height="16" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+    </div>
+    <span class="topbar-title">Finalizar Pedido</span>
+    <span class="topbar-steps">Passo 2 de 3</span>
+  </div>
+
+  <!-- Progress -->
+  <div class="prog">
+    <div class="prog-bar"><div class="prog-fill"></div></div>
+  </div>
+
+  <!-- Content -->
+  <div class="scroll">
+
+    <!-- Cart items -->
+    <div style="height:2px"></div>
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#FFF0E8">
+          <svg width="18" height="18" fill="none" stroke="#F1591D" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          </svg>
+        </div>
+        <span class="card-title">Itens do Pedido (3)</span>
+        <span style="margin-left:auto;font-size:12px;font-weight:700;color:#F1591D">Editar</span>
+      </div>
+      <div class="card-body">
+        <div class="item">
+          <div class="item-img">🏗️</div>
+          <div>
+            <div class="item-name">Cimento CP-II 50kg Votorantim</div>
+            <div class="item-unit">saco (50 kg) · Materiais Belo</div>
+          </div>
+          <div class="item-right">
+            <div class="item-qty">
+              <div class="qty-btn">−</div><span class="qty-n">5</span><div class="qty-btn">+</div>
+            </div>
+            <div class="item-price">R$ 164,50</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-img">⚡</div>
+          <div>
+            <div class="item-name">Fio Elétrico 2,5mm 100m Prysmian</div>
+            <div class="item-unit">rolo (100 m) · Construfácil Sul</div>
+          </div>
+          <div class="item-right">
+            <div class="item-qty">
+              <div class="qty-btn">−</div><span class="qty-n">1</span><div class="qty-btn">+</div>
+            </div>
+            <div class="item-price">R$ 189,00</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-img">🪣</div>
+          <div>
+            <div class="item-name">Tinta Acrílica 18L Coral Branco</div>
+            <div class="item-unit">lata (18 L) · DepósitoMax</div>
+          </div>
+          <div class="item-right">
+            <div class="item-qty">
+              <div class="qty-btn">−</div><span class="qty-n">2</span><div class="qty-btn">+</div>
+            </div>
+            <div class="item-price">R$ 439,80</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#FFF0E8">
+          <svg width="18" height="18" fill="none" stroke="#F1591D" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+            <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8zM5.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+          </svg>
+        </div>
+        <span class="card-title">Modo de Entrega</span>
+      </div>
+      <div class="card-body">
+        <div class="del-opt">
+          <div class="dopt sel">
+            <div class="radio sel"><div class="radio-inner"></div></div>
+            <div class="dopt-icon" style="background:#FFF0E8">🚚</div>
+            <div style="flex:1">
+              <div class="dopt-title">Frota da Loja</div>
+              <div class="dopt-sub">Entrega feita pela equipe de Materiais Belo. Hoje, entre 14h–18h</div>
+            </div>
+            <div class="dopt-price" style="color:#22C55E">Grátis</div>
+          </div>
+          <div class="dopt">
+            <div class="radio"></div>
+            <div class="dopt-icon" style="background:#F0F4FF">⚡</div>
+            <div style="flex:1">
+              <div class="dopt-title">Entrega Expressa</div>
+              <div class="dopt-sub">Via parceiro logístico (Loggi). Hoje em até 2h</div>
+            </div>
+            <div class="dopt-price">+ R$ 28,90</div>
+          </div>
+          <div class="dopt">
+            <div class="radio"></div>
+            <div class="dopt-icon" style="background:#F0FFF4">🏪</div>
+            <div style="flex:1">
+              <div class="dopt-title">Retirada na Loja</div>
+              <div class="dopt-sub">Retire em Materiais Belo, Av. Brasil 1200</div>
+            </div>
+            <div class="dopt-price" style="color:#22C55E">Grátis</div>
+          </div>
+        </div>
+        <!-- Address -->
+        <div class="addr" style="margin-top:14px">
+          <div class="addr-ic">📍</div>
+          <div>
+            <div class="addr-main">Rua das Flores, 142 — Apt. 31</div>
+            <div class="addr-sub">Centro, São Paulo · SP · 01310-100</div>
+          </div>
+          <div class="addr-change">Trocar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#FFF0E8">
+          <svg width="18" height="18" fill="none" stroke="#F1591D" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+            <rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
+        <span class="card-title">Pagamento</span>
+      </div>
+      <div class="card-body">
+        <div class="pay-opts">
+          <div class="po sel">
+            <div class="po-icon">🟩</div>
+            <div class="po-lbl">PIX</div>
+            <div class="po-desc">Aprovação<br>instantânea</div>
+          </div>
+          <div class="po">
+            <div class="po-icon">💳</div>
+            <div class="po-lbl">Cartão</div>
+            <div class="po-desc">Até 12x<br>sem juros</div>
+          </div>
+          <div class="po">
+            <div class="po-icon">🧾</div>
+            <div class="po-lbl">Boleto</div>
+            <div class="po-desc">Vence em<br>3 dias úteis</div>
+          </div>
+        </div>
+        <!-- Pix detail -->
+        <div class="pix-box">
+          <div class="pix-qr">📱</div>
+          <div>
+            <div class="pix-title">Pague via PIX e ganhe 5% de desconto</div>
+            <div class="pix-sub">QR Code gerado após confirmar. Válido por 30 minutos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="card" style="margin-bottom:4px">
+      <div class="card-hdr">
+        <div class="card-icon" style="background:#F2F2F2">
+          <svg width="18" height="18" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/>
+          </svg>
+        </div>
+        <span class="card-title">Resumo do Pedido</span>
+      </div>
+      <div class="card-body">
+        <div class="sum-row"><span class="sum-lbl">Subtotal</span><span class="sum-val">R$ 793,30</span></div>
+        <div class="sum-row disc"><span class="sum-lbl">Desconto PIX 5%</span><span class="sum-val">− R$ 39,67</span></div>
+        <div class="sum-row"><span class="sum-lbl">Taxa de entrega</span><span class="sum-val" style="color:#22C55E">Grátis</span></div>
+        <div class="sum-row total">
+          <span class="sum-lbl">Total</span>
+          <span class="sum-val">R$ 753,63</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll -->
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-info">
+      <span class="cta-lbl">Total a pagar</span>
+      <span class="cta-val">R$ 753,63</span>
+    </div>
+    <button class="cta-btn">
+      <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24">
+        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+        <polyline points="22,4 12,14.01 9,11.01"/>
+      </svg>
+      Confirmar Pedido
+    </button>
+  </div>
+
+</div><!-- /phone -->
+</body>
+</html>
