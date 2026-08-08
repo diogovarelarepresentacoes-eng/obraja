@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "ObraJá Vendedor",
+    "slug": "obraja-seller",
+    "version": "1.0.0",
+    "scheme": "obraja-seller",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.obraja.seller"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F05A28"
+      },
+      "package": "com.obraja.seller"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-image-picker",
+      [
+        "expo-notifications",
+        {
+          "color": "#F05A28"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

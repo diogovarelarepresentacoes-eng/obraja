@@ -2,9 +2,16 @@ import { NestFactory } from '@nestjs/core'
 import { ValidationPipe, VersioningType } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import { HttpExceptionFilter } from './common/filters/http-exception.filter'
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
+import { TransformInterceptor } from './common/interceptors/transform.interceptor'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger: process.env.NODE_ENV === 'production'
+      ? ['error', 'warn', 'log']
+      : ['error', 'warn', 'log', 'debug', 'verbose'],
+  })
 
   app.enableCors({
     origin: process.env.CORS_ORIGINS?.split(',') ?? ['http://localhost:3001', 'http://localhost:3002'],
@@ -21,6 +28,9 @@ async function bootstrap() {
       transform: true,
     }),
   )
+
+  app.useGlobalFilters(new HttpExceptionFilter())
+  app.useGlobalInterceptors(new LoggingInterceptor(), new TransformInterceptor())
 
   const config = new DocumentBuilder()
     .setTitle('ObraJá API')
