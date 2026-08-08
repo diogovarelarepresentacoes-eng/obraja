@@ -25,7 +25,7 @@ export class DeliveryOrder {
   @Column({ name: 'order_id' })
   orderId: string
 
-  @Column({ name: 'driver_id', nullable: true })
+  @Column({ name: 'driver_id', type: 'varchar', nullable: true })
   driverId: string | null
 
   @Column({ name: 'store_name' })
@@ -61,13 +61,13 @@ export class DeliveryOrder {
   @Column({ type: 'enum', enum: DeliveryStatus, default: DeliveryStatus.AVAILABLE })
   status: DeliveryStatus
 
-  @Column({ name: 'accepted_at', nullable: true })
+  @Column({ name: 'accepted_at', type: 'timestamp', nullable: true })
   acceptedAt: Date | null
 
-  @Column({ name: 'pickup_confirmed_at', nullable: true })
+  @Column({ name: 'pickup_confirmed_at', type: 'timestamp', nullable: true })
   pickupConfirmedAt: Date | null
 
-  @Column({ name: 'delivered_at', nullable: true })
+  @Column({ name: 'delivered_at', type: 'timestamp', nullable: true })
   deliveredAt: Date | null
 
   @CreateDateColumn({ name: 'created_at' })

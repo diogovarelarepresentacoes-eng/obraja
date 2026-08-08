@@ -27,7 +27,7 @@ export class DriverProfile {
   @Column({ type: 'enum', enum: VehicleType, name: 'vehicle_type' })
   vehicleType: VehicleType
 
-  @Column({ name: 'vehicle_plate', nullable: true })
+  @Column({ name: 'vehicle_plate', type: 'varchar', nullable: true })
   vehiclePlate: string | null
 
   @Column()
