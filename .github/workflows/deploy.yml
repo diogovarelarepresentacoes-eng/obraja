@@ -42,7 +42,9 @@ jobs:
             cd apps/web-admin && npm run build && cd /var/www/obraja
 
             echo "Restarting PM2..."
-            pm2 reload ecosystem.config.js --update-env
+            pm2 delete obraja-customer obraja-seller obraja-admin 2>/dev/null || true
+            pm2 reload obraja-api --update-env 2>/dev/null || true
+            pm2 start ecosystem.config.js
             pm2 save
 
             echo "Deploy concluido!"
