@@ -13,7 +13,7 @@ jobs:
         with:
           host: 31.97.173.136
           username: root
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: 22
           script: |
             set -e
