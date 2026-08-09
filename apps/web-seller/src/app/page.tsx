@@ -97,13 +97,28 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { step: '01', icon: '📋', title: 'Crie sua conta', desc: 'Cadastre-se de acordo com seu perfil: loja, indústria, construtora ou entregador. Processo 100% digital e gratuito.' },
-              { step: '02', icon: '🔗', title: 'Conecte-se', desc: 'Encontre fornecedores, clientes e parceiros de entrega em sua região ou em todo o Brasil.' },
-              { step: '03', icon: '🚀', title: 'Feche negócios', desc: 'Compre, venda e entregue com segurança. Pagamentos integrados, rastreamento em tempo real.' },
+              {
+                step: '01',
+                icon: <svg width="28" height="28" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>,
+                title: 'Crie sua conta',
+                desc: 'Cadastre-se de acordo com seu perfil: loja, indústria, construtora ou entregador. Processo 100% digital e gratuito.',
+              },
+              {
+                step: '02',
+                icon: <svg width="28" height="28" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>,
+                title: 'Conecte-se',
+                desc: 'Encontre fornecedores, clientes e parceiros de entrega em sua região ou em todo o Brasil.',
+              },
+              {
+                step: '03',
+                icon: <svg width="28" height="28" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
+                title: 'Feche negócios',
+                desc: 'Compre, venda e entregue com segurança. Pagamentos integrados, rastreamento em tempo real.',
+              },
             ].map((item) => (
               <div key={item.step} className="relative bg-white rounded-2xl p-8 shadow-sm border border-[#E5E5E5] hover:border-[#F05A28]/30 hover:shadow-lg transition-all">
                 <div className="text-xs font-black text-[#F05A28] mb-4 tracking-widest opacity-60">{item.step}</div>
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-[#FFF3EE] flex items-center justify-center mb-4">{item.icon}</div>
                 <h3 className="text-xl font-black text-[#1A1A1A] mb-2">{item.title}</h3>
                 <p className="text-[#9E9E9E] leading-relaxed text-sm">{item.desc}</p>
               </div>
@@ -129,7 +144,7 @@ export default function LandingPage() {
                   <div className={`absolute top-0 right-0 w-48 h-48 ${role.glowClass} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity`} />
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
-                      <div className="text-5xl">{role.icon}</div>
+                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ backgroundColor: role.iconBg }}>{role.icon}</div>
                       <div className={`text-xs font-bold px-3 py-1 rounded-full ${role.badgeClass}`}>{role.badge}</div>
                     </div>
                     <h3 className={`text-2xl font-black mb-3 ${role.titleColor}`}>{role.title}</h3>
@@ -166,7 +181,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden">
             {FEATURES.map((f) => (
               <div key={f.title} className="bg-[#1A1A1A] p-8 hover:bg-[#2D2D2D] transition-colors">
-                <div className="text-3xl mb-4">{f.icon}</div>
+                <div className="w-10 h-10 rounded-xl bg-[#F05A28]/10 flex items-center justify-center mb-4">{f.icon}</div>
                 <h3 className="text-white font-bold text-lg mb-2">{f.title}</h3>
                 <p className="text-[#9E9E9E] text-sm leading-relaxed">{f.desc}</p>
               </div>
@@ -260,7 +275,8 @@ const ROLES = [
     shortTitle: 'Loja',
     title: 'Loja de Materiais',
     badge: 'Mais popular',
-    icon: '🏪',
+    icon: <svg width="28" height="28" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+    iconBg: 'rgba(240,90,40,0.12)',
     desc: 'Expanda suas vendas digitalmente. Alcance construtoras e consumidores em toda a região, gerencie estoque e entregas em um só lugar.',
     features: [
       'Dashboard com métricas de vendas',
@@ -283,7 +299,8 @@ const ROLES = [
     shortTitle: 'Indústria',
     title: 'Indústria / Fábrica',
     badge: 'B2B',
-    icon: '🏭',
+    icon: <svg width="28" height="28" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M2 20h20M4 20V10l6-4v4l6-4v4l4-3v9"/><rect x="8" y="15" width="3" height="5"/><rect x="13" y="13" width="3" height="7"/></svg>,
+    iconBg: 'rgba(240,90,40,0.12)',
     desc: 'Distribua seus produtos para lojas e construtoras em todo o Brasil. Gerencie pedidos de reposição e escale sua distribuição.',
     features: [
       'Venda B2B para lojas e construtoras',
@@ -306,7 +323,8 @@ const ROLES = [
     shortTitle: 'Construtora',
     title: 'Construtora',
     badge: 'Faturamento',
-    icon: '🏗️',
+    icon: <svg width="28" height="28" fill="none" stroke="#3B82F6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="1"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="17"/><line x1="9.5" y1="14.5" x2="14.5" y2="14.5"/></svg>,
+    iconBg: 'rgba(59,130,246,0.12)',
     desc: 'Compre materiais de múltiplos fornecedores com faturamento, cotações em massa e entrega diretamente na obra.',
     features: [
       'Cotação com múltiplos fornecedores',
@@ -329,7 +347,8 @@ const ROLES = [
     shortTitle: 'Entregador',
     title: 'Entregador',
     badge: 'App mobile',
-    icon: '🛵',
+    icon: <svg width="28" height="28" fill="none" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
+    iconBg: 'rgba(34,197,94,0.12)',
     desc: 'Faça entregas de materiais de construção na sua cidade com autonomia. Você decide quando e quanto trabalhar.',
     features: [
       'Aceite entregas pelo app',
@@ -350,10 +369,34 @@ const ROLES = [
 ]
 
 const FEATURES = [
-  { icon: '💳', title: 'Pagamentos integrados', desc: 'Pix, cartão, boleto e faturamento B2B. Split automático entre vendedor e plataforma.' },
-  { icon: '📍', title: 'Rastreamento em tempo real', desc: 'Acompanhe cada entrega com GPS ao vivo. Cliente e loja sabem onde está o pedido.' },
-  { icon: '📊', title: 'Dashboards inteligentes', desc: 'Métricas de vendas, estoque, receita e performance em painéis intuitivos.' },
-  { icon: '🔔', title: 'Notificações automáticas', desc: 'WhatsApp, push e e-mail para cada etapa do pedido. Menos ligações, mais eficiência.' },
-  { icon: '🤖', title: 'IA no CRM', desc: 'Sugestões automáticas de reposição, análise de risco de cliente e chatbot 24h.' },
-  { icon: '🔒', title: 'Segurança e compliance', desc: 'LGPD, NF-e integrada, verificação de CNPJ e CPF em todos os cadastros.' },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>,
+    title: 'Pagamentos integrados',
+    desc: 'Pix, cartão, boleto e faturamento B2B. Split automático entre vendedor e plataforma.',
+  },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+    title: 'Rastreamento em tempo real',
+    desc: 'Acompanhe cada entrega com GPS ao vivo. Cliente e loja sabem onde está o pedido.',
+  },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+    title: 'Dashboards inteligentes',
+    desc: 'Métricas de vendas, estoque, receita e performance em painéis intuitivos.',
+  },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>,
+    title: 'Notificações automáticas',
+    desc: 'WhatsApp, push e e-mail para cada etapa do pedido. Menos ligações, mais eficiência.',
+  },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>,
+    title: 'IA no CRM',
+    desc: 'Sugestões automáticas de reposição, análise de risco de cliente e chatbot 24h.',
+  },
+  {
+    icon: <svg width="22" height="22" fill="none" stroke="#F05A28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>,
+    title: 'Segurança e compliance',
+    desc: 'LGPD, NF-e integrada, verificação de CNPJ e CPF em todos os cadastros.',
+  },
 ]

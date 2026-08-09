@@ -118,9 +118,9 @@ function Sidebar({ pathname }: { pathname: string }) {
         <div className="flex items-center gap-2">
           <span className="text-2xl font-black tracking-tight">
             <span className="text-white">Obra</span>
-            <span className="text-[#F1591D]">Já</span>
+            <span className="text-[#F05A28]">Já</span>
           </span>
-          <span className="text-[10px] font-bold bg-[#F1591D] text-white px-1.5 py-0.5 rounded uppercase tracking-wide">
+          <span className="text-[10px] font-bold bg-[#F05A28] text-white px-1.5 py-0.5 rounded uppercase tracking-wide">
             Loja
           </span>
         </div>
@@ -136,8 +136,8 @@ function Sidebar({ pathname }: { pathname: string }) {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-[#2D2D2D] text-[#F1591D] border-l-[3px] border-[#F1591D] pl-[9px]'
-                  : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white border-l-[3px] border-transparent pl-[9px]'
+                  ? 'bg-[#F05A28]/15 text-white'
+                  : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white'
               }`}
             >
               {item.icon}
@@ -150,7 +150,7 @@ function Sidebar({ pathname }: { pathname: string }) {
       {/* User info */}
       <div className="px-4 py-4 border-t border-[#2D2D2D]">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#F1591D] flex items-center justify-center text-white text-sm font-bold shrink-0">
+          <div className="w-9 h-9 rounded-full bg-[#F05A28] flex items-center justify-center text-white text-sm font-bold shrink-0">
             MB
           </div>
           <div className="min-w-0">
@@ -182,10 +182,10 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
                 <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
                 <path d="M13.73 21a2 2 0 01-3.46 0" />
               </svg>
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#F1591D] rounded-full" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#F05A28] rounded-full" />
             </button>
             {/* Avatar */}
-            <div className="w-9 h-9 rounded-full bg-[#F1591D] flex items-center justify-center text-white text-sm font-bold cursor-pointer">
+            <div className="w-9 h-9 rounded-full bg-[#F05A28] flex items-center justify-center text-white text-sm font-bold cursor-pointer">
               MB
             </div>
           </div>

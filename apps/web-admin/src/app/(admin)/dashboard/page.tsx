@@ -1,13 +1,38 @@
 'use client'
 
+import React from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import Link from 'next/link'
 
+const STAT_ICONS: Record<string, React.ReactNode> = {
+  gmv: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+    </svg>
+  ),
+  pedidos: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
+    </svg>
+  ),
+  aprovacoes: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+    </svg>
+  ),
+  usuarios: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+    </svg>
+  ),
+}
+
 const STATS = [
-  { label: 'GMV do Mês', value: 'R$ 1,24M', change: '+18%', icon: '💰', color: '#F05A28' },
-  { label: 'Pedidos Ativos', value: '156', change: '+7%', icon: '🛒', color: '#3B82F6' },
-  { label: 'Aprovações Pendentes', value: '38', change: '−3', icon: '⏳', color: '#FFB800' },
-  { label: 'Usuários Totais', value: '2.847', change: '+124', icon: '👥', color: '#22C55E' },
+  { label: 'GMV do Mês', value: 'R$ 1,24M', change: '+18%', positive: true, iconKey: 'gmv', color: '#F05A28' },
+  { label: 'Pedidos Ativos', value: '156', change: '+7%', positive: true, iconKey: 'pedidos', color: '#3B82F6' },
+  { label: 'Aprovações Pendentes', value: '38', change: '−3', positive: false, iconKey: 'aprovacoes', color: '#FFB800' },
+  { label: 'Usuários Totais', value: '2.847', change: '+124', positive: true, iconKey: 'usuarios', color: '#22C55E' },
 ]
 
 const REVENUE_DATA = [
@@ -58,10 +83,10 @@ export default function DashboardPage() {
         {STATS.map(s => (
           <div key={s.label} className="bg-white rounded-2xl p-5 border border-[#E5E5E5]">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style={{ backgroundColor: s.color + '15' }}>
-                {s.icon}
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: s.color + '18', color: s.color }}>
+                {STAT_ICONS[s.iconKey]}
               </div>
-              <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-50 text-green-700">{s.change}</span>
+              <span className={`text-xs font-bold px-2 py-1 rounded-full ${s.positive ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'}`}>{s.change}</span>
             </div>
             <div className="text-2xl font-black text-[#1A1A1A]">{s.value}</div>
             <div className="text-sm text-[#9E9E9E] mt-0.5">{s.label}</div>

@@ -1,35 +1,63 @@
+const KpiIcon = ({ type }: { type: string }) => {
+  if (type === 'pedidos') return (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
+    </svg>
+  )
+  if (type === 'receita') return (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+    </svg>
+  )
+  if (type === 'produtos') return (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" />
+    </svg>
+  )
+  return (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" />
+      <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+    </svg>
+  )
+}
+
 const kpis = [
   {
     label: 'Pedidos Hoje',
     value: '18',
-    change: '↑ 8% vs ontem',
+    change: '+8% vs ontem',
     changePositive: true,
-    icon: '📦',
-    iconBg: 'bg-orange-100',
+    iconType: 'pedidos',
+    iconColor: '#F05A28',
+    iconBg: 'rgba(240,90,40,0.1)',
   },
   {
     label: 'Receita do Mês',
     value: 'R$ 127.450',
-    change: '↑ 15% vs mês anterior',
+    change: '+15% vs mês anterior',
     changePositive: true,
-    icon: '💰',
-    iconBg: 'bg-green-100',
+    iconType: 'receita',
+    iconColor: '#059669',
+    iconBg: 'rgba(5,150,105,0.1)',
   },
   {
     label: 'Produtos Ativos',
     value: '234',
     change: 'no catálogo',
     changePositive: true,
-    icon: '🏷️',
-    iconBg: 'bg-blue-100',
+    iconType: 'produtos',
+    iconColor: '#2563EB',
+    iconBg: 'rgba(37,99,235,0.1)',
   },
   {
     label: 'Entregadores Disponíveis',
     value: '5 de 7',
     change: '2 em rota agora',
     changePositive: true,
-    icon: '🛵',
-    iconBg: 'bg-purple-100',
+    iconType: 'entregadores',
+    iconColor: '#7C3AED',
+    iconBg: 'rgba(124,58,237,0.1)',
   },
 ]
 
@@ -109,17 +137,29 @@ const recentOrders = [
   },
 ]
 
+const StatusDot = ({ status }: { status: 'online' | 'away' | 'critical' | 'warning' }) => {
+  const colors: Record<string, string> = {
+    online: '#22C55E',
+    away: '#F05A28',
+    critical: '#EF4444',
+    warning: '#FFB800',
+  }
+  return (
+    <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: colors[status] }} />
+  )
+}
+
 const deliverers = [
-  { name: 'Carlos Mendes', vehicle: 'Moto Honda CG', status: 'Disponível', statusColor: 'text-green-500', dot: '🟢', count: 3 },
-  { name: 'Roberto Souza', vehicle: 'Moto Yamaha', status: 'Em rota', statusColor: 'text-orange-500', dot: '🟠', extra: 'Est. retorno: 14h30', count: null },
-  { name: 'Marcos Lima', vehicle: 'Fiorino', status: 'Em rota', statusColor: 'text-orange-500', dot: '🟠', extra: 'Est. retorno: 15h00', count: null },
-  { name: 'Paulo Costa', vehicle: 'Moto Honda', status: 'Disponível', statusColor: 'text-green-500', dot: '🟢', count: 2 },
-  { name: 'André Silva', vehicle: 'Van Sprinter', status: 'Disponível', statusColor: 'text-green-500', dot: '🟢', count: 1 },
+  { name: 'Carlos Mendes', vehicle: 'Moto Honda CG', status: 'Disponível', statusType: 'online' as const, statusColor: 'text-green-600', count: 3 },
+  { name: 'Roberto Souza', vehicle: 'Moto Yamaha', status: 'Em rota', statusType: 'away' as const, statusColor: 'text-orange-500', extra: 'Est. retorno: 14h30', count: null },
+  { name: 'Marcos Lima', vehicle: 'Fiorino', status: 'Em rota', statusType: 'away' as const, statusColor: 'text-orange-500', extra: 'Est. retorno: 15h00', count: null },
+  { name: 'Paulo Costa', vehicle: 'Moto Honda', status: 'Disponível', statusType: 'online' as const, statusColor: 'text-green-600', count: 2 },
+  { name: 'André Silva', vehicle: 'Van Sprinter', status: 'Disponível', statusType: 'online' as const, statusColor: 'text-green-600', count: 1 },
 ]
 
 const stockAlerts = [
-  { level: 'critical', product: 'Cimento CP-II 50kg', qty: '45 sacos', min: '200', color: 'text-red-600', dot: '🔴' },
-  { level: 'warning', product: 'Tinta Coral 18L Branco', qty: '12 latas', min: '30', color: 'text-yellow-600', dot: '🟡' },
+  { level: 'critical', product: 'Cimento CP-II 50kg', qty: '45 sacos', min: '200', color: 'text-red-600' },
+  { level: 'warning', product: 'Tinta Coral 18L Branco', qty: '12 latas', min: '30', color: 'text-yellow-600' },
 ]
 
 export default function StoreDashboardPage() {
@@ -128,14 +168,14 @@ export default function StoreDashboardPage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-[10px] border border-[#E5E5E5] p-5 flex items-start gap-4">
-            <div className={`w-12 h-12 rounded-lg ${kpi.iconBg} flex items-center justify-center text-2xl shrink-0`}>
-              {kpi.icon}
+          <div key={kpi.label} className="bg-white rounded-xl border border-[#E5E5E5] p-5 flex items-start gap-4">
+            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: kpi.iconBg, color: kpi.iconColor }}>
+              <KpiIcon type={kpi.iconType} />
             </div>
             <div>
               <p className="text-sm text-[#9E9E9E] font-medium">{kpi.label}</p>
               <p className="text-2xl font-black text-[#1A1A1A] mt-0.5">{kpi.value}</p>
-              <p className={`text-xs mt-1 font-medium ${kpi.changePositive ? 'text-green-600' : 'text-red-500'}`}>
+              <p className={`text-xs mt-1 font-medium ${kpi.changePositive ? 'text-emerald-600' : 'text-red-500'}`}>
                 {kpi.change}
               </p>
             </div>
@@ -210,7 +250,7 @@ export default function StoreDashboardPage() {
             {deliverers.map((d) => (
               <div key={d.name} className="flex-1 min-w-[180px] bg-[#F8F8F8] rounded-lg p-4 border border-[#E5E5E5]">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-lg">{d.dot}</span>
+                  <StatusDot status={d.statusType} />
                   <span className="font-semibold text-[#1A1A1A] text-sm">{d.name}</span>
                 </div>
                 <p className="text-xs text-[#9E9E9E]">{d.vehicle}</p>
@@ -247,7 +287,7 @@ export default function StoreDashboardPage() {
                 }`}
               >
                 <div className="flex items-start gap-2">
-                  <span className="text-base">{alert.dot}</span>
+                  <StatusDot status={alert.level === 'critical' ? 'critical' : 'warning'} />
                   <div>
                     <p className={`text-sm font-semibold ${alert.color}`}>{alert.product}</p>
                     <p className="text-xs text-[#9E9E9E] mt-0.5">

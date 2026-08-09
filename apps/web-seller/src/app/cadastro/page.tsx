@@ -1,9 +1,32 @@
 import Link from 'next/link'
 
+const RoleIcon = ({ id }: { id: string }) => {
+  if (id === 'loja') return (
+    <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  )
+  if (id === 'industria') return (
+    <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <path d="M2 20h20M4 20V10l6-4v4l6-4v4l4-3v9" /><rect x="8" y="15" width="3" height="5" /><rect x="13" y="13" width="3" height="7" />
+    </svg>
+  )
+  if (id === 'construtora') return (
+    <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <rect x="2" y="7" width="20" height="15" rx="1" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" /><line x1="12" y1="12" x2="12" y2="17" /><line x1="9.5" y1="14.5" x2="14.5" y2="14.5" />
+    </svg>
+  )
+  return (
+    <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" />
+      <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+    </svg>
+  )
+}
+
 const ROLES = [
   {
     id: 'loja',
-    icon: '🏪',
     title: 'Loja de Materiais',
     subtitle: 'Venda para construtoras e consumidores',
     desc: 'Você tem uma loja física ou virtual de materiais de construção e quer expandir suas vendas digitalmente.',
@@ -16,7 +39,6 @@ const ROLES = [
   },
   {
     id: 'industria',
-    icon: '🏭',
     title: 'Indústria / Fábrica',
     subtitle: 'Distribua para todo o Brasil',
     desc: 'Você fabrica ou distribui materiais de construção e quer conectar-se a lojas e construtoras de forma escalável.',
@@ -29,7 +51,6 @@ const ROLES = [
   },
   {
     id: 'construtora',
-    icon: '🏗️',
     title: 'Construtora',
     subtitle: 'Compre com faturamento e entrega na obra',
     desc: 'Você é uma empresa de construção e precisa de fornecedores confiáveis, cotações rápidas e entrega direta no canteiro.',
@@ -42,7 +63,6 @@ const ROLES = [
   },
   {
     id: 'entregador',
-    icon: '🛵',
     title: 'Entregador',
     subtitle: 'Ganhe dinheiro fazendo entregas',
     desc: 'Você tem um veículo e quer trabalhar com autonomia, entregando materiais de construção pela sua cidade.',
@@ -112,7 +132,9 @@ export default function CadastroPage() {
                 />
 
                 <div className="flex items-start gap-5">
-                  <div className="text-5xl shrink-0 mt-1">{role.icon}</div>
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: role.color + '15', color: role.color }}>
+                    <RoleIcon id={role.id} />
+                  </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">

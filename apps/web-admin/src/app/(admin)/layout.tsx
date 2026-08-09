@@ -4,13 +4,75 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
 const NAV = [
-  { href: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { href: '/aprovacoes', icon: '✅', label: 'Aprovações', badge: 38 },
-  { href: '/produtos', icon: '📦', label: 'Produtos', badge: 94 },
-  { href: '/usuarios', icon: '👥', label: 'Usuários' },
-  { href: '/pedidos', icon: '🛒', label: 'Pedidos' },
-  { href: '/comissoes', icon: '💰', label: 'Comissões' },
-  { href: '/moderacao', icon: '🛡️', label: 'Moderação', badge: 12 },
+  {
+    href: '/dashboard',
+    label: 'Dashboard',
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" />
+      </svg>
+    ),
+  },
+  {
+    href: '/aprovacoes',
+    label: 'Aprovações',
+    badge: 38,
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+      </svg>
+    ),
+  },
+  {
+    href: '/produtos',
+    label: 'Produtos',
+    badge: 94,
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+      </svg>
+    ),
+  },
+  {
+    href: '/usuarios',
+    label: 'Usuários',
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+      </svg>
+    ),
+  },
+  {
+    href: '/pedidos',
+    label: 'Pedidos',
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" />
+        <path d="M16 10a4 4 0 01-8 0" />
+      </svg>
+    ),
+  },
+  {
+    href: '/comissoes',
+    label: 'Comissões',
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+      </svg>
+    ),
+  },
+  {
+    href: '/moderacao',
+    label: 'Moderação',
+    badge: 12,
+    icon: (
+      <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+  },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -38,11 +100,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group ${
                   active
-                    ? 'bg-[#F05A28]/15 text-white border-l-2 border-[#F05A28] pl-2.5'
+                    ? 'bg-[#F05A28]/20 text-white'
                     : 'text-[#9E9E9E] hover:text-white hover:bg-white/5'
                 }`}
               >
-                <span className="text-base shrink-0">{item.icon}</span>
+                <span className={`shrink-0 ${active ? 'text-[#F05A28]' : ''}`}>{item.icon}</span>
                 <span className="flex-1">{item.label}</span>
                 {item.badge && (
                   <span className="text-xs bg-[#F05A28] text-white font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
@@ -56,14 +118,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <div className="px-3 py-4 border-t border-white/10 space-y-0.5">
           <Link href="/configuracoes" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#9E9E9E] hover:text-white hover:bg-white/5 transition-all">
-            <span className="text-base">⚙️</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
             <span>Configurações</span>
           </Link>
           <button
             onClick={() => router.push('/login')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#9E9E9E] hover:text-red-400 hover:bg-red-500/10 transition-all"
           >
-            <span className="text-base">🚪</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
             <span>Sair</span>
           </button>
         </div>
