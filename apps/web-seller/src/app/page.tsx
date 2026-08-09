@@ -12,7 +12,7 @@ export default function LandingPage() {
           </Link>
           <Link
             href="/cadastro"
-            className="text-sm font-bold bg-[#F05A28] text-white px-5 py-2.5 rounded-full hover:bg-[#CC4010] transition-all shadow-lg shadow-[#F05A28]/25 active:scale-95"
+            className="text-sm font-bold bg-[#F05A28] text-white px-5 py-2.5 rounded-full hover:bg-[#CC4010] transition-[background-color,transform] duration-150 shadow-lg shadow-[#F05A28]/25 active:scale-[0.97]"
           >
             Começar grátis
           </Link>
@@ -51,7 +51,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/cadastro"
-              className="inline-flex items-center gap-2 bg-[#F05A28] text-white font-black text-lg px-8 py-4 rounded-2xl hover:bg-[#CC4010] transition-all shadow-2xl shadow-[#F05A28]/30 active:scale-95"
+              className="inline-flex items-center gap-2 bg-[#F05A28] text-white font-black text-lg px-8 py-4 rounded-2xl hover:bg-[#CC4010] transition-[background-color,transform] duration-150 shadow-2xl shadow-[#F05A28]/30 active:scale-[0.97]"
             >
               Criar conta grátis
               <ArrowRight />
@@ -116,7 +116,7 @@ export default function LandingPage() {
                 desc: 'Compre, venda e entregue com segurança. Pagamentos integrados, rastreamento em tempo real.',
               },
             ].map((item) => (
-              <div key={item.step} className="relative bg-white rounded-2xl p-8 shadow-sm border border-[#E5E5E5] hover:border-[#F05A28]/30 hover:shadow-lg transition-all">
+              <div key={item.step} className="relative bg-white rounded-2xl p-8 shadow-sm border border-[#E5E5E5] hover:border-[#F05A28]/30 hover:shadow-lg transition-[border-color,box-shadow] duration-200">
                 <div className="text-xs font-black text-[#F05A28] mb-4 tracking-widest opacity-60">{item.step}</div>
                 <div className="w-12 h-12 rounded-xl bg-[#FFF3EE] flex items-center justify-center mb-4">{item.icon}</div>
                 <h3 className="text-xl font-black text-[#1A1A1A] mb-2">{item.title}</h3>
@@ -140,7 +140,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {ROLES.map((role) => (
               <Link key={role.id} href={`/cadastro/${role.id}`} className="group block">
-                <div className={`relative overflow-hidden rounded-3xl p-8 h-full transition-all hover:scale-[1.02] hover:shadow-2xl border ${role.borderClass} ${role.bgClass}`}>
+                <div className={`relative overflow-hidden rounded-3xl p-8 h-full hover-lift hover:shadow-2xl border ${role.borderClass} ${role.bgClass}`}>
                   <div className={`absolute top-0 right-0 w-48 h-48 ${role.glowClass} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity`} />
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
@@ -159,9 +159,9 @@ export default function LandingPage() {
                         </li>
                       ))}
                     </ul>
-                    <div className={`inline-flex items-center gap-2 font-bold text-sm ${role.ctaColor} group-hover:gap-3 transition-all`}>
+                    <div className={`inline-flex items-center gap-2 font-bold text-sm ${role.ctaColor}`}>
                       Cadastrar como {role.shortTitle}
-                      <ArrowRight />
+                      <span className="group-hover:translate-x-1 transition-transform duration-150 inline-block"><ArrowRight /></span>
                     </div>
                   </div>
                 </div>
@@ -206,7 +206,7 @@ export default function LandingPage() {
           </p>
           <Link
             href="/cadastro"
-            className="inline-flex items-center gap-3 bg-white text-[#F05A28] font-black text-xl px-10 py-5 rounded-2xl hover:bg-[#1A1A1A] hover:text-white transition-all shadow-2xl active:scale-95"
+            className="inline-flex items-center gap-3 bg-white text-[#F05A28] font-black text-xl px-10 py-5 rounded-2xl hover:bg-[#1A1A1A] hover:text-white transition-[background-color,color,transform] duration-150 shadow-2xl active:scale-[0.97]"
           >
             Criar conta grátis
             <ArrowRight />

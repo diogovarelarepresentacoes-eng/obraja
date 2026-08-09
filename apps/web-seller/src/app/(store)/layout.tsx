@@ -134,7 +134,7 @@ function Sidebar({ pathname }: { pathname: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-[#F05A28]/15 text-white'
                   : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white'

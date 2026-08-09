@@ -121,10 +121,10 @@ function Sidebar({ pathname }: { pathname: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-[#2D2D2D] text-[#F05A28] border-l-[3px] border-[#F05A28] pl-[9px]'
-                  : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white border-l-[3px] border-transparent pl-[9px]'
+                  ? 'bg-[#F05A28]/20 text-white'
+                  : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white'
               }`}
             >
               {item.icon}
