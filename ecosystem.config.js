@@ -5,6 +5,7 @@ module.exports = {
       cwd: '/var/www/obraja/packages/api',
       script: 'dist/main.js',
       instances: 1,
+      exec_mode: 'cluster',
       autorestart: true,
       watch: false,
       max_memory_restart: '512M',
@@ -16,7 +17,7 @@ module.exports = {
     {
       name: 'obraja-customer',
       cwd: '/var/www/obraja/apps/web-customer',
-      script: 'node_modules/.bin/next',
+      script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3002',
       exec_mode: 'fork',
       instances: 1,
@@ -31,7 +32,7 @@ module.exports = {
     {
       name: 'obraja-seller',
       cwd: '/var/www/obraja/apps/web-seller',
-      script: 'node_modules/.bin/next',
+      script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3000',
       exec_mode: 'fork',
       instances: 1,
@@ -46,7 +47,7 @@ module.exports = {
     {
       name: 'obraja-admin',
       cwd: '/var/www/obraja/apps/web-admin',
-      script: 'node_modules/.bin/next',
+      script: 'node_modules/next/dist/bin/next',
       args: 'start -p 3001',
       exec_mode: 'fork',
       instances: 1,
