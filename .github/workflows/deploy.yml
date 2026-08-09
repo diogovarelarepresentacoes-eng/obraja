@@ -47,3 +47,15 @@ jobs:
 
             echo "Deploy concluido!"
             pm2 status
+
+            echo "=== Logs obraja-seller ==="
+            pm2 logs obraja-seller --lines 20 --nostream 2>&1 | tail -20 || true
+
+            echo "=== Logs obraja-admin ==="
+            pm2 logs obraja-admin --lines 20 --nostream 2>&1 | tail -20 || true
+
+            echo "=== Logs obraja-customer ==="
+            pm2 logs obraja-customer --lines 20 --nostream 2>&1 | tail -20 || true
+
+            echo "=== ecosystem.config.js ==="
+            cat /var/www/obraja/ecosystem.config.js 2>/dev/null || echo "NAO ENCONTRADO"
