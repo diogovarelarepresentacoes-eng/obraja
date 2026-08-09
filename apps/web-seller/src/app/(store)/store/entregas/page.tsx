@@ -1,3 +1,17 @@
+import type { DeliveryDisplayStatus } from '@obraja/shared'
+
+type FleetMember = {
+  name: string
+  vehicle: string
+  type: string
+  plate: string
+  status: DeliveryDisplayStatus
+  deliveries: number
+  rating: string
+  action: string
+  actionStyle: string
+}
+
 const summary = [
   { label: 'Total', count: 11, color: 'text-[#1A1A1A]' },
   { label: 'Em rota', count: 3, color: 'text-orange-600' },
@@ -35,23 +49,23 @@ const activeDeliveries = [
   },
 ]
 
-const DOT_COLORS: Record<string, string> = {
+const DOT_COLORS: Record<DeliveryDisplayStatus, string> = {
   'Em rota': '#F05A28',
   Disponível: '#22C55E',
   Folga: '#EF4444',
 }
 
-const StatusDot = ({ status }: { status: string }) => (
+const StatusDot = ({ status }: { status: DeliveryDisplayStatus }) => (
   <span className="inline-block w-2 h-2 rounded-full shrink-0 mr-1.5" style={{ backgroundColor: DOT_COLORS[status] ?? '#9E9E9E' }} />
 )
 
-const fleetStatus: Record<string, { label: string; textColor: string; rowBg: string }> = {
+const fleetStatus: Record<DeliveryDisplayStatus, { label: string; textColor: string; rowBg: string }> = {
   'Em rota': { label: 'Em rota', textColor: 'text-orange-600', rowBg: 'bg-orange-50' },
   Disponível: { label: 'Disponível', textColor: 'text-green-600', rowBg: '' },
   Folga: { label: 'Folga', textColor: 'text-red-500', rowBg: 'bg-red-50' },
 }
 
-const fleet = [
+const fleet: FleetMember[] = [
   { name: 'Carlos Mendes', vehicle: 'Honda CG 160', type: 'Moto', plate: 'ABC-1234', status: 'Em rota', deliveries: 2, rating: '4.8', action: 'Detalhes', actionStyle: 'bg-[#F2F2F2] text-[#1A1A1A] hover:bg-gray-200' },
   { name: 'Roberto Souza', vehicle: 'Yamaha Factor', type: 'Moto', plate: 'DEF-5678', status: 'Em rota', deliveries: 1, rating: '4.6', action: 'Detalhes', actionStyle: 'bg-[#F2F2F2] text-[#1A1A1A] hover:bg-gray-200' },
   { name: 'Marcos Lima', vehicle: 'Fiat Fiorino', type: 'Van', plate: 'GHI-9012', status: 'Em rota', deliveries: 1, rating: '4.7', action: 'Detalhes', actionStyle: 'bg-[#F2F2F2] text-[#1A1A1A] hover:bg-gray-200' },

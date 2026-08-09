@@ -1,3 +1,6 @@
 export * from './tokens/colors'
 export * from './tokens/typography'
 export * from './tokens/spacing'
+export * from './components/AppSidebar'
+export * from './components/Field'
+export * from './components/FileUpload'

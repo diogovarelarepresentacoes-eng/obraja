@@ -19,7 +19,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@obraja/shared": ["../../packages/shared/src/index.ts"],
+      "@obraja/shared/*": ["../../packages/shared/src/*"],
+      "@obraja/ui": ["../../packages/ui/src/index.ts"],
+      "@obraja/ui/*": ["../../packages/ui/src/*"]
     }
   },
   "include": [

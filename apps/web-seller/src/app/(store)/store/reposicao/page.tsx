@@ -1,3 +1,14 @@
+import type { ReplenishmentDisplayStatus } from '@obraja/shared'
+
+type ReplenishmentOrder = {
+  id: string
+  supplier: string
+  product: string
+  total: string
+  status: ReplenishmentDisplayStatus
+  date: string
+}
+
 const criticalStock = [
   {
     product: 'Cimento CP-II 50kg',
@@ -22,7 +33,7 @@ const criticalStock = [
   },
 ]
 
-const statusBadge: Record<string, string> = {
+const statusBadge: Record<ReplenishmentDisplayStatus, string> = {
   Aguardando: 'bg-yellow-100 text-yellow-800',
   Confirmado: 'bg-blue-100 text-blue-800',
   'Em produção': 'bg-purple-100 text-purple-800',
@@ -30,7 +41,7 @@ const statusBadge: Record<string, string> = {
   Cancelado: 'bg-red-100 text-red-800',
 }
 
-const replenishmentOrders = [
+const replenishmentOrders: ReplenishmentOrder[] = [
   {
     id: '#R-089',
     supplier: 'Belgo Zincor',

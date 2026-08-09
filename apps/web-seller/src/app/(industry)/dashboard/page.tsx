@@ -1,4 +1,15 @@
 import Link from 'next/link'
+import type { IndustryOrderDisplayStatus } from '@obraja/shared'
+
+type RecentOrder = {
+  id: string
+  loja: string
+  produto: string
+  qtd: string
+  valor: string
+  status: IndustryOrderDisplayStatus
+  data: string
+}
 
 const kpis = [
   {
@@ -58,7 +69,7 @@ const kpis = [
   },
 ]
 
-const recentOrders = [
+const recentOrders: RecentOrder[] = [
   { id: '#4521', loja: 'Materiais Belo', produto: 'Cimento CP-II', qtd: '200 sacos', valor: 'R$ 6.580', status: 'Em produção', data: '01/08/2026' },
   { id: '#4520', loja: 'Construfácil Sul', produto: 'Argamassa AC-II', qtd: '50 cx', valor: 'R$ 1.875', status: 'Enviado', data: '31/07/2026' },
   { id: '#4519', loja: 'DepósitoMax', produto: 'Cimento CP-V', qtd: '500 sacos', valor: 'R$ 15.450', status: 'Entregue', data: '30/07/2026' },
@@ -67,7 +78,7 @@ const recentOrders = [
   { id: '#4516', loja: 'Construtec', produto: 'Argamassa AC-I', qtd: '100 cx', valor: 'R$ 3.200', status: 'Enviado', data: '29/07/2026' },
 ]
 
-const statusStyle: Record<string, string> = {
+const statusStyle: Record<IndustryOrderDisplayStatus, string> = {
   Pendente: 'bg-yellow-100 text-yellow-800',
   'Em produção': 'bg-blue-100 text-blue-800',
   Enviado: 'bg-orange-100 text-[#F05A28]',

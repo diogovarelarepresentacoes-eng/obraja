@@ -1,4 +1,15 @@
-const orders = [
+import type { IndustryOrderDisplayStatus } from '@obraja/shared'
+
+type IndustryOrder = {
+  id: string
+  loja: string
+  itens: string
+  total: string
+  status: IndustryOrderDisplayStatus
+  data: string
+}
+
+const orders: IndustryOrder[] = [
   { id: '#4521', loja: 'Materiais Belo', itens: 'Cimento CP-II × 200 sacos', total: 'R$ 6.580,00', status: 'Em produção', data: '01/08/2026' },
   { id: '#4520', loja: 'Construfácil Sul', itens: 'Argamassa AC-II × 50 cx', total: 'R$ 1.875,00', status: 'Enviado', data: '31/07/2026' },
   { id: '#4519', loja: 'DepósitoMax', itens: 'Cimento CP-V × 500 sacos', total: 'R$ 15.450,00', status: 'Entregue', data: '30/07/2026' },
@@ -13,7 +24,7 @@ const orders = [
   { id: '#4510', loja: 'Materiais Belo', itens: 'Cimento CP-V × 150 sacos', total: 'R$ 4.635,00', status: 'Entregue', data: '25/07/2026' },
 ]
 
-const statusStyle: Record<string, string> = {
+const statusStyle: Record<IndustryOrderDisplayStatus, string> = {
   Pendente: 'bg-yellow-100 text-yellow-800',
   'Em produção': 'bg-blue-100 text-blue-800',
   Enviado: 'bg-orange-100 text-[#F05A28]',

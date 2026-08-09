@@ -9,9 +9,13 @@
     "lint": "eslint src --ext .ts,.tsx"
   },
   "peerDependencies": {
+    "next": ">=15.0.0",
     "react": ">=18.0.0"
   },
   "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "next": "16.2.12",
     "typescript": "^5.5.4"
   }
 }

@@ -1,8 +1,13 @@
 'use client'
 
 import React from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
+
+const RevenueChart = dynamic(() => import('./_RevenueChart'), {
+  ssr: false,
+  loading: () => <div className="h-[200px] bg-[#F8F8F8] rounded-xl animate-pulse" />,
+})
 
 const STAT_ICONS: Record<string, React.ReactNode> = {
   gmv: (
@@ -66,10 +71,6 @@ const ROLE_STATS = [
   { role: 'Consumidores', count: 110, color: '#9E9E9E' },
 ]
 
-function formatCurrency(v: number) {
-  return `R$ ${(v / 1000).toFixed(0)}k`
-}
-
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
@@ -104,15 +105,7 @@ export default function DashboardPage() {
             </div>
             <span className="text-xs font-bold text-[#F05A28] bg-[#FFF3EE] px-3 py-1 rounded-full">+18% vs mês anterior</span>
           </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={REVENUE_DATA}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#F2F2F2" />
-              <XAxis dataKey="mes" tick={{ fontSize: 12, fill: '#9E9E9E' }} axisLine={false} tickLine={false} />
-              <YAxis tickFormatter={formatCurrency} tick={{ fontSize: 11, fill: '#9E9E9E' }} axisLine={false} tickLine={false} />
-              <Tooltip formatter={(v) => [`R$ ${Number(v).toLocaleString('pt-BR')}`, 'GMV']} />
-              <Line type="monotone" dataKey="valor" stroke="#F05A28" strokeWidth={2.5} dot={{ fill: '#F05A28', r: 4 }} activeDot={{ r: 6 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          <RevenueChart data={REVENUE_DATA} />
         </div>
 
         <div className="bg-white rounded-2xl p-6 border border-[#E5E5E5]">

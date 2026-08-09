@@ -2,6 +2,8 @@
 
 import { useState, useRef } from 'react'
 import Link from 'next/link'
+import { validateCnpj, formatCnpj, formatPhone, formatCep, validateFile, ESTADOS } from '@obraja/shared'
+import { Field, FileUpload, INPUT } from '@obraja/ui'
 
 const SEGMENTOS = [
   'Cimento e Cal', 'Tintas e Vernizes', 'Cerâmica e Porcelanato',
@@ -15,47 +17,6 @@ const PORTES = [
   { value: 'media', label: 'Média empresa' },
   { value: 'grande', label: 'Grande empresa' },
 ]
-
-function validateCnpj(cnpj: string): boolean {
-  const d = cnpj.replace(/\D/g, '')
-  if (d.length !== 14 || /^(\d)\1{13}$/.test(d)) return false
-  const calc = (s: string, w: number[]) => {
-    const sum = s.split('').reduce((a, n, i) => a + parseInt(n) * w[i], 0)
-    const r = sum % 11
-    return r < 2 ? 0 : 11 - r
-  }
-  const d1 = calc(d.slice(0, 12), [5,4,3,2,9,8,7,6,5,4,3,2])
-  const d2 = calc(d.slice(0, 13), [6,5,4,3,2,9,8,7,6,5,4,3,2])
-  return parseInt(d[12]) === d1 && parseInt(d[13]) === d2
-}
-
-function formatCnpj(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 14)
-  if (d.length <= 2) return d
-  if (d.length <= 5) return `${d.slice(0,2)}.${d.slice(2)}`
-  if (d.length <= 8) return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5)}`
-  if (d.length <= 12) return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8)}`
-  return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8,12)}-${d.slice(12)}`
-}
-
-function formatPhone(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 11)
-  if (d.length <= 2) return d
-  if (d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`
-  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`
-}
-
-function formatCep(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 8)
-  return d.length > 5 ? `${d.slice(0,5)}-${d.slice(5)}` : d
-}
-
-function validateFile(file: File): string | null {
-  const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
-  if (!allowed.includes(file.type)) return 'Formato inválido. Use PDF, JPG ou PNG.'
-  if (file.size > 10 * 1024 * 1024) return 'Arquivo muito grande. Máximo 10 MB.'
-  return null
-}
 
 export default function CadastroIndustriaPage() {
   const [step, setStep] = useState(1)
@@ -474,48 +435,3 @@ export default function CadastroIndustriaPage() {
   )
 }
 
-function FileUpload({ label, required, hint, file, onFile, inputRef }: {
-  label: string; required?: boolean; hint?: string; file: File | null
-  onFile: (f: File | null) => void; inputRef: React.RefObject<HTMLInputElement | null>
-}) {
-  return (
-    <div>
-      <label className="block text-sm font-semibold text-[#1A1A1A] mb-1">
-        {label} {required && <span className="text-[#F05A28]">*</span>}
-      </label>
-      {hint && <p className="text-xs text-[#9E9E9E] mb-2">{hint}</p>}
-      {file ? (
-        <div className="flex items-center justify-between bg-[#FFF3EE] rounded-xl px-4 py-3">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📄</span>
-            <span className="text-sm font-medium text-[#F05A28] truncate max-w-[260px]">{file.name}</span>
-          </div>
-          <button type="button" onClick={() => onFile(null)} className="text-xs text-red-400 hover:text-red-600 font-bold ml-2">✕ Remover</button>
-        </div>
-      ) : (
-        <button type="button" onClick={() => inputRef.current?.click()}
-          className="w-full border-2 border-dashed border-[#E5E5E5] hover:border-[#F05A28] rounded-xl py-6 px-4 text-center transition-all">
-          <div className="text-3xl mb-2">📎</div>
-          <div className="text-sm font-semibold text-[#9E9E9E]">Clique para selecionar arquivo</div>
-          <div className="text-xs text-[#9E9E9E] mt-1">PDF, JPG ou PNG — máx. 10 MB</div>
-        </button>
-      )}
-      <input ref={inputRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="hidden"
-        onChange={e => { onFile(e.target.files?.[0] ?? null); if (inputRef.current) inputRef.current.value = '' }} />
-    </div>
-  )
-}
-
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">
-        {label} {required && <span className="text-[#F05A28]">*</span>}
-      </label>
-      {children}
-    </div>
-  )
-}
-
-const INPUT = 'w-full h-11 px-4 border-2 border-[#E5E5E5] rounded-xl text-sm text-[#1A1A1A] bg-white focus:border-[#F05A28] focus:outline-none transition-colors'
-const ESTADOS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']

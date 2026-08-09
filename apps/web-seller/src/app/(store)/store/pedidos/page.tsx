@@ -1,3 +1,16 @@
+import type { StoreOrderDisplayStatus } from '@obraja/shared'
+
+type StoreOrder = {
+  id: string
+  client: string
+  contact: string
+  items: string
+  total: string
+  delivery: string
+  status: StoreOrderDisplayStatus
+  date: string
+}
+
 const tabs = [
   { label: 'Todos', count: 47, key: 'todos' },
   { label: 'Aguardando', count: 6, key: 'aguardando' },
@@ -7,7 +20,7 @@ const tabs = [
   { label: 'Cancelados', count: 5, key: 'cancelados' },
 ]
 
-const statusBadge: Record<string, string> = {
+const statusBadge: Record<StoreOrderDisplayStatus, string> = {
   Aguardando: 'bg-yellow-100 text-yellow-800',
   Separando: 'bg-blue-100 text-blue-800',
   Saiu: 'bg-orange-100 text-orange-800',
@@ -15,7 +28,7 @@ const statusBadge: Record<string, string> = {
   Cancelado: 'bg-red-100 text-red-800',
 }
 
-const orders = [
+const orders: StoreOrder[] = [
   { id: '#8821', client: 'João Silva', contact: '(31) 9 9123-4567', items: 'Cimento CP-II (5 scs) + Areia', total: 'R$ 278,50', delivery: 'Frota própria', status: 'Aguardando', date: '01/08/2026' },
   { id: '#8820', client: 'Construtora Horizonte', contact: '(31) 3210-5544', items: 'Tinta Acrílica 18L (12 latas)', total: 'R$ 2.638,80', delivery: 'Expressa', status: 'Separando', date: '01/08/2026' },
   { id: '#8819', client: 'Maria Santos', contact: '(31) 9 9876-5432', items: 'Fio Elétrico 2,5mm 100m', total: 'R$ 189,00', delivery: 'Retirada', status: 'Saiu', date: '01/08/2026' },

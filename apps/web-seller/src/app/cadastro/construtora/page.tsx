@@ -2,52 +2,13 @@
 
 import { useState, useRef } from 'react'
 import Link from 'next/link'
+import { validateCnpj, formatCnpj, formatPhone, formatCep, validateFile, ESTADOS } from '@obraja/shared'
+import { Field, FileUpload, INPUT_BLUE } from '@obraja/ui'
 
 const TIPOS_OBRA = [
   'Residencial', 'Comercial', 'Industrial', 'Infraestrutura',
   'Reforma', 'Incorporação', 'Loteamento', 'Outros',
 ]
-
-function validateCnpj(cnpj: string): boolean {
-  const d = cnpj.replace(/\D/g, '')
-  if (d.length !== 14 || /^(\d)\1{13}$/.test(d)) return false
-  const calc = (s: string, w: number[]) => {
-    const sum = s.split('').reduce((a, n, i) => a + parseInt(n) * w[i], 0)
-    const r = sum % 11
-    return r < 2 ? 0 : 11 - r
-  }
-  const d1 = calc(d.slice(0, 12), [5,4,3,2,9,8,7,6,5,4,3,2])
-  const d2 = calc(d.slice(0, 13), [6,5,4,3,2,9,8,7,6,5,4,3,2])
-  return parseInt(d[12]) === d1 && parseInt(d[13]) === d2
-}
-
-function formatCnpj(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 14)
-  if (d.length <= 2) return d
-  if (d.length <= 5) return `${d.slice(0,2)}.${d.slice(2)}`
-  if (d.length <= 8) return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5)}`
-  if (d.length <= 12) return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8)}`
-  return `${d.slice(0,2)}.${d.slice(2,5)}.${d.slice(5,8)}/${d.slice(8,12)}-${d.slice(12)}`
-}
-
-function formatPhone(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 11)
-  if (d.length <= 2) return d
-  if (d.length <= 7) return `(${d.slice(0,2)}) ${d.slice(2)}`
-  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`
-}
-
-function formatCep(v: string) {
-  const d = v.replace(/\D/g, '').slice(0, 8)
-  return d.length > 5 ? `${d.slice(0,5)}-${d.slice(5)}` : d
-}
-
-function validateFile(file: File): string | null {
-  const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
-  if (!allowed.includes(file.type)) return 'Formato inválido. Use PDF, JPG ou PNG.'
-  if (file.size > 10 * 1024 * 1024) return 'Arquivo muito grande. Máximo 10 MB.'
-  return null
-}
 
 export default function CadastroConstutoraPage() {
   const [step, setStep] = useState(1)
@@ -257,11 +218,11 @@ export default function CadastroConstutoraPage() {
             <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-xs text-blue-700">
               🔒 Todos os dados são verificados junto à Receita Federal para garantir a segurança da plataforma.
             </div>
-            <Field label="CNPJ" required color="blue">
+            <Field label="CNPJ" required accentColor="blue">
               <input className={INPUT_BLUE} placeholder="00.000.000/0000-00" value={form.cnpj}
                 onChange={e => setForm(f => ({ ...f, cnpj: formatCnpj(e.target.value) }))} />
             </Field>
-            <Field label="Nome da construtora (nome fantasia)" required color="blue">
+            <Field label="Nome da construtora (nome fantasia)" required accentColor="blue">
               <input className={INPUT_BLUE} placeholder="Ex: Construtora ABC" value={form.nomeFantasia}
                 onChange={e => setForm(f => ({ ...f, nomeFantasia: e.target.value }))} />
             </Field>
@@ -270,11 +231,11 @@ export default function CadastroConstutoraPage() {
                 onChange={e => setForm(f => ({ ...f, razaoSocial: e.target.value }))} />
             </Field>
             <div className="grid grid-cols-2 gap-4">
-              <Field label="E-mail corporativo" required color="blue">
+              <Field label="E-mail corporativo" required accentColor="blue">
                 <input className={INPUT_BLUE} type="email" placeholder="compras@construtora.com" value={form.email}
                   onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
               </Field>
-              <Field label="Telefone" required color="blue">
+              <Field label="Telefone" required accentColor="blue">
                 <input className={INPUT_BLUE} placeholder="(00) 00000-0000" value={form.telefone}
                   onChange={e => setForm(f => ({ ...f, telefone: formatPhone(e.target.value) }))} />
               </Field>
@@ -286,7 +247,7 @@ export default function CadastroConstutoraPage() {
           <div className="space-y-5">
             <h2 className="text-2xl font-black text-[#1A1A1A]">Localização e perfil</h2>
             <div className="grid grid-cols-2 gap-4">
-              <Field label="CEP" required color="blue">
+              <Field label="CEP" required accentColor="blue">
                 <input className={INPUT_BLUE} placeholder="00000-000" value={form.cep}
                   onChange={e => {
                     const v = formatCep(e.target.value)
@@ -294,7 +255,7 @@ export default function CadastroConstutoraPage() {
                     fetchCep(v)
                   }} />
               </Field>
-              <Field label="Estado" required color="blue">
+              <Field label="Estado" required accentColor="blue">
                 <select className={INPUT_BLUE} value={form.estado}
                   onChange={e => setForm(f => ({ ...f, estado: e.target.value }))}>
                   <option value="">UF</option>
@@ -311,12 +272,12 @@ export default function CadastroConstutoraPage() {
                 <input className={INPUT_BLUE} placeholder="Bairro" value={form.bairro}
                   onChange={e => setForm(f => ({ ...f, bairro: e.target.value }))} />
               </Field>
-              <Field label="Cidade principal" required color="blue">
+              <Field label="Cidade principal" required accentColor="blue">
                 <input className={INPUT_BLUE} placeholder="Cidade" value={form.cidade}
                   onChange={e => setForm(f => ({ ...f, cidade: e.target.value }))} />
               </Field>
             </div>
-            <Field label="Tipos de obra que você realiza" required color="blue">
+            <Field label="Tipos de obra que você realiza" required accentColor="blue">
               <div className="flex flex-wrap gap-2 mt-1">
                 {TIPOS_OBRA.map(t => (
                   <button key={t} type="button" onClick={() => toggleTipo(t)}
@@ -422,11 +383,11 @@ export default function CadastroConstutoraPage() {
                 </div>
               </div>
             </div>
-            <Field label="Senha de acesso" required color="blue">
+            <Field label="Senha de acesso" required accentColor="blue">
               <input className={INPUT_BLUE} type="password" placeholder="Mínimo 8 caracteres" value={form.senha}
                 onChange={e => setForm(f => ({ ...f, senha: e.target.value }))} />
             </Field>
-            <Field label="Confirmar senha" required color="blue">
+            <Field label="Confirmar senha" required accentColor="blue">
               <input className={INPUT_BLUE} type="password" placeholder="Repita a senha" value={form.confirmarSenha}
                 onChange={e => setForm(f => ({ ...f, confirmarSenha: e.target.value }))} />
             </Field>
@@ -463,60 +424,3 @@ export default function CadastroConstutoraPage() {
   )
 }
 
-function FileUpload({ label, required, hint, file, onFile, inputRef, accentColor }: {
-  label: string
-  required?: boolean
-  hint?: string
-  file: File | null
-  onFile: (f: File | null) => void
-  inputRef: React.RefObject<HTMLInputElement | null>
-  accentColor?: string
-}) {
-  const borderFocus = accentColor === 'blue' ? 'hover:border-blue-400' : 'hover:border-[#F05A28]'
-  const textFocus = accentColor === 'blue' ? 'hover:text-blue-600' : 'hover:text-[#F05A28]'
-  const fileBg = accentColor === 'blue' ? 'bg-blue-50' : 'bg-[#FFF3EE]'
-  const fileText = accentColor === 'blue' ? 'text-blue-700' : 'text-[#F05A28]'
-  return (
-    <div>
-      <label className="block text-sm font-semibold text-[#1A1A1A] mb-1">
-        {label} {required && <span className={accentColor === 'blue' ? 'text-blue-500' : 'text-[#F05A28]'}>*</span>}
-      </label>
-      {hint && <p className="text-xs text-[#9E9E9E] mb-2">{hint}</p>}
-      {file ? (
-        <div className={`flex items-center justify-between ${fileBg} rounded-xl px-4 py-3`}>
-          <div className="flex items-center gap-2">
-            <span className="text-lg">📄</span>
-            <span className={`text-sm font-medium ${fileText} truncate max-w-[260px]`}>{file.name}</span>
-          </div>
-          <button type="button" onClick={() => onFile(null)} className="text-xs text-red-400 hover:text-red-600 font-bold ml-2">✕ Remover</button>
-        </div>
-      ) : (
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          className={`w-full border-2 border-dashed border-[#E5E5E5] ${borderFocus} rounded-xl py-6 px-4 text-center transition-all group`}
-        >
-          <div className="text-3xl mb-2">📎</div>
-          <div className={`text-sm font-semibold text-[#9E9E9E] ${textFocus} transition-colors`}>Clique para selecionar arquivo</div>
-          <div className="text-xs text-[#9E9E9E] mt-1">PDF, JPG ou PNG — máx. 10 MB</div>
-        </button>
-      )}
-      <input ref={inputRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="hidden"
-        onChange={e => { onFile(e.target.files?.[0] ?? null); if (inputRef.current) inputRef.current.value = '' }} />
-    </div>
-  )
-}
-
-function Field({ label, required, color, children }: { label: string; required?: boolean; color?: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">
-        {label} {required && <span className={color === 'blue' ? 'text-blue-500' : 'text-[#F05A28]'}>*</span>}
-      </label>
-      {children}
-    </div>
-  )
-}
-
-const INPUT_BLUE = 'w-full h-11 px-4 border-2 border-[#E5E5E5] rounded-xl text-sm text-[#1A1A1A] bg-white focus:border-blue-400 focus:outline-none transition-colors'
-const ESTADOS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO']

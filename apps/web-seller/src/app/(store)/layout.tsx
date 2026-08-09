@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { AppSidebar } from '@obraja/ui'
 
 const navItems = [
   {
@@ -110,57 +110,10 @@ const pageTitles: Record<string, string> = {
   '/store/configuracoes': 'Configurações',
 }
 
-function Sidebar({ pathname }: { pathname: string }) {
-  return (
-    <aside className="hidden md:flex flex-col w-[240px] min-h-screen bg-[#1A1A1A] shrink-0">
-      {/* Logo */}
-      <div className="px-6 py-6 border-b border-[#2D2D2D]">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-black tracking-tight">
-            <span className="text-white">Obra</span>
-            <span className="text-[#F05A28]">Já</span>
-          </span>
-          <span className="text-[10px] font-bold bg-[#F05A28] text-white px-1.5 py-0.5 rounded uppercase tracking-wide">
-            Loja
-          </span>
-        </div>
-      </div>
-
-      {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                isActive
-                  ? 'bg-[#F05A28]/15 text-white'
-                  : 'text-[#9E9E9E] hover:bg-[#2D2D2D] hover:text-white'
-              }`}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </Link>
-          )
-        })}
-      </nav>
-
-      {/* User info */}
-      <div className="px-4 py-4 border-t border-[#2D2D2D]">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#F05A28] flex items-center justify-center text-white text-sm font-bold shrink-0">
-            MB
-          </div>
-          <div className="min-w-0">
-            <p className="text-white text-sm font-semibold truncate">Materiais Belo Ltda.</p>
-            <p className="text-[#9E9E9E] text-xs truncate">loja@materiaisbelo.com.br</p>
-          </div>
-        </div>
-      </div>
-    </aside>
-  )
+const userInfo = {
+  initials: 'MB',
+  name: 'Materiais Belo Ltda.',
+  email: 'loja@materiaisbelo.com.br',
 }
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
@@ -169,14 +122,17 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen bg-[#F8F8F8]">
-      <Sidebar pathname={pathname} />
+      <AppSidebar
+        navItems={navItems}
+        pathname={pathname}
+        brandBadge="Loja"
+        userInfo={userInfo}
+      />
 
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top header */}
         <header className="bg-white border-b border-[#E5E5E5] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <h1 className="text-xl font-black text-[#1A1A1A] tracking-tight">{pageTitle}</h1>
           <div className="flex items-center gap-4">
-            {/* Notifications */}
             <button className="relative p-2 rounded-lg hover:bg-[#F2F2F2] transition-colors">
               <svg width="20" height="20" fill="none" stroke="#1A1A1A" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -184,14 +140,12 @@ export default function StoreLayout({ children }: { children: React.ReactNode })
               </svg>
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#F05A28] rounded-full" />
             </button>
-            {/* Avatar */}
             <div className="w-9 h-9 rounded-full bg-[#F05A28] flex items-center justify-center text-white text-sm font-bold cursor-pointer">
               MB
             </div>
           </div>
         </header>
 
-        {/* Main content */}
         <main className="flex-1 p-6">
           {children}
         </main>

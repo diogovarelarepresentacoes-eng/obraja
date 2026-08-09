@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@obraja/shared": "workspace:*",
+    "@obraja/ui": "workspace:*",
     "@tanstack/react-query": "^5.101.4",
     "next": "16.2.12",
     "react": "19.2.4",
