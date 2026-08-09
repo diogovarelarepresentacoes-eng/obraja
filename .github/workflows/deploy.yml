@@ -20,6 +20,9 @@ jobs:
             cd /var/www/obraja
 
             echo "Pulling latest code..."
+            git fetch origin main
+            git checkout -- .
+            git clean -f
             git pull origin main
 
             echo "Installing dependencies..."
