@@ -88,7 +88,9 @@ export default function CadastroLojaPage() {
           estado: data.uf || f.estado,
         }))
       }
-    } catch {}
+    } catch {
+      setError('Erro ao buscar CEP. Preencha o endereço manualmente.')
+    }
   }
 
   function validate(s: number): string | null {
@@ -128,6 +130,8 @@ export default function CadastroLojaPage() {
     const err = validate(4)
     if (err) return setError(err)
     setLoading(true)
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 30_000)
     try {
       const fd = new FormData()
       fd.append('name', form.nomeFantasia)
@@ -151,6 +155,7 @@ export default function CadastroLojaPage() {
       const res = await fetch(`${apiUrl}/api/v1/auth/register-pending`, {
         method: 'POST',
         body: fd,
+        signal: controller.signal,
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
@@ -159,8 +164,13 @@ export default function CadastroLojaPage() {
       }
       setSubmitted(true)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erro ao enviar cadastro.')
+      if (e instanceof Error && e.name === 'AbortError') {
+        setError('Tempo esgotado. Verifique sua conexão e tente novamente.')
+      } else {
+        setError(e instanceof Error ? e.message : 'Erro ao enviar cadastro.')
+      }
     } finally {
+      clearTimeout(timeoutId)
       setLoading(false)
     }
   }
