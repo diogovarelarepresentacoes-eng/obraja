@@ -18,5 +18,8 @@
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
   },
-  "packageManager": "pnpm@11.18.0"
+  "packageManager": "pnpm@11.18.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["bcrypt", "sharp", "msgpackr-extract", "unrs-resolver", "@scarf/scarf"]
+  }
 }
