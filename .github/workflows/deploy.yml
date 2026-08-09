@@ -26,7 +26,7 @@ jobs:
             git pull origin main
 
             echo "Installing dependencies..."
-            pnpm install --frozen-lockfile
+            pnpm install
 
             echo "Building API..."
             cd packages/api && npx nest build && cd /var/www/obraja
