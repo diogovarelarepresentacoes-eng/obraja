@@ -19,7 +19,7 @@ JWT_REFRESH_SECRET=$(openssl rand -base64 64 | tr -d '\n')
 NODE_ENV=production
 PORT=3333
 REDIS_URL=redis://localhost:6379
-CORS_ORIGINS=https://divixstudio.io,https://loja.divixstudio.io,https://admin.divixstudio.io
+CORS_ORIGINS=https://loja.divixstudio.io,https://admin.divixstudio.io
 ENV
   echo "Criado packages/api/.env (JWT_SECRET gerado aleatoriamente)"
   echo "ATENÇÃO: guarde o conteúdo de packages/api/.env em local seguro!"

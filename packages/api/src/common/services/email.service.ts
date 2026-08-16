@@ -4,7 +4,7 @@ import { Injectable, Logger } from '@nestjs/common'
 export class EmailService {
   private readonly logger = new Logger(EmailService.name)
   private readonly fromEmail = process.env.SENDGRID_FROM_EMAIL ?? 'noreply@obraja.com.br'
-  private readonly frontendUrl = process.env.FRONTEND_URL ?? 'https://divixstudio.io'
+  private readonly frontendUrl = process.env.FRONTEND_URL ?? 'https://loja.divixstudio.io'
 
   async sendPasswordReset(to: string, name: string, rawToken: string): Promise<void> {
     const resetUrl = `${this.frontendUrl}/reset-password?token=${rawToken}`
