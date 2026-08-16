@@ -10,14 +10,19 @@ echo "========================================"
 
 # ─── Criar .env da API ────────────────────────────────────────────────────────
 if [ ! -f "packages/api/.env" ]; then
-  cat > packages/api/.env << 'ENV'
-DATABASE_URL=postgresql://obraja_user:ObraJa@2026!@localhost:5432/obraja_db
-JWT_SECRET=obraja-jwt-super-secret-2026-change-this
+  JWT_SECRET=$(openssl rand -base64 64 | tr -d '\n')
+  DB_PASS=${DB_PASSWORD:-"ObraJa@2026!"}
+  cat > packages/api/.env << ENV
+DATABASE_URL=postgresql://obraja_user:${DB_PASS}@localhost:5432/obraja_db
+JWT_SECRET=${JWT_SECRET}
+JWT_REFRESH_SECRET=$(openssl rand -base64 64 | tr -d '\n')
 NODE_ENV=production
 PORT=3333
 REDIS_URL=redis://localhost:6379
+CORS_ORIGINS=https://divixstudio.io,https://loja.divixstudio.io,https://admin.divixstudio.io
 ENV
-  echo "Criado packages/api/.env"
+  echo "Criado packages/api/.env (JWT_SECRET gerado aleatoriamente)"
+  echo "ATENÇÃO: guarde o conteúdo de packages/api/.env em local seguro!"
 fi
 
 # ─── Criar .env dos apps Next.js ──────────────────────────────────────────────

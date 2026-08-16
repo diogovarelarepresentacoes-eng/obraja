@@ -1,14 +1,30 @@
 import { Client } from 'ssh2'
-import { readFileSync } from 'fs'
+import { readFileSync, existsSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 
-const HOST = '31.97.173.136'
-const USER = 'root'
-const PASSWORD = 'SENHA_REMOVIDA_DO_HISTORICO'
+// Lê credenciais de deploy/.secrets ou env vars — nunca commite senhas reais
+const secretsFile = join(__dirname, '.secrets')
+if (existsSync(secretsFile)) {
+  for (const line of readFileSync(secretsFile, 'utf-8').split('\n')) {
+    const trimmed = line.trim()
+    if (trimmed && !trimmed.startsWith('#')) {
+      const [k, ...rest] = trimmed.split('=')
+      if (k && !(k in process.env)) process.env[k.trim()] = rest.join('=').trim()
+    }
+  }
+}
+
+const HOST = process.env.VPS_HOST ?? '31.97.173.136'
+const USER = process.env.VPS_USER ?? 'root'
+const PASSWORD = process.env.VPS_PASSWORD ?? ''
+if (!PASSWORD) {
+  console.error('\n[ERRO] VPS_PASSWORD não definido.\nCrie deploy/.secrets com base em deploy/.secrets.example\n')
+  process.exit(1)
+}
 
 function run(conn, cmd, timeout = 120000) {
   return new Promise((resolve, reject) => {

@@ -46,3 +46,13 @@ coverage
 web-build/
 android/
 ios/
+
+# Deploy secrets — NUNCA commitar
+deploy/.secrets
+deploy/__pycache__/
+deploy/*.pyc
+
+# Python virtualenv (gerado localmente)
+Lib/
+Scripts/
+pyvenv.cfg
