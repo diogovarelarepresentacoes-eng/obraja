@@ -18,6 +18,7 @@ export interface UpdateUserDto {
   avatarUrl?: string
   isActive?: boolean
   isVerified?: boolean
+  lastLogoutAt?: Date
 }
 
 @Injectable()
@@ -46,5 +47,9 @@ export class UsersService {
     const user = await this.findById(id)
     Object.assign(user, dto)
     return this.usersRepository.save(user)
+  }
+
+  async updatePassword(id: string, passwordHash: string): Promise<void> {
+    await this.usersRepository.update(id, { passwordHash })
   }
 }

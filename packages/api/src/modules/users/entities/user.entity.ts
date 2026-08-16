@@ -47,6 +47,9 @@ export class User {
   @Column({ name: 'is_verified', default: false })
   isVerified: boolean
 
+  @Column({ name: 'last_logout_at', nullable: true })
+  lastLogoutAt?: Date
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 

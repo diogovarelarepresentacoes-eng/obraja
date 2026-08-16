@@ -16,6 +16,7 @@ import { OrdersModule } from './modules/orders/orders.module'
 import { PaymentsModule } from './modules/payments/payments.module'
 import { NotificationsModule } from './modules/notifications/notifications.module'
 import { ThrottlerUserGuard } from './common/guards/throttler-user.guard'
+import { AuditModule } from './modules/audit/audit.module'
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ThrottlerUserGuard } from './common/guards/throttler-user.guard'
       }),
     }),
     AuthModule,
+    AuditModule,
     UsersModule,
     IndustryModule,
     ContractorModule,

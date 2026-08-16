@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET ?? 'changeme',
+      secretOrKey: process.env.JWT_SECRET,
     })
   }
 
@@ -26,6 +26,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user || !user.isActive) {
       throw new UnauthorizedException('Token inválido ou usuário inativo')
     }
+
+    // Invalidate tokens issued before the last logout
+    if (user.lastLogoutAt && payload.iat !== undefined) {
+      if (payload.iat * 1000 < user.lastLogoutAt.getTime()) {
+        throw new UnauthorizedException('Sessão encerrada. Faça login novamente.')
+      }
+    }
+
     return user
   }
 }
