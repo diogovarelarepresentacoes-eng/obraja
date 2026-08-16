@@ -1,108 +1,206 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
-import ProductCard from '../_components/ProductCard'
-import {
-  CATEGORIES,
-  DAILY_OFFERS,
-  BEST_SELLERS,
-} from '../_data/mock'
-import type { Product } from '../_data/mock'
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-const ALL_PRODUCTS: Product[] = [...DAILY_OFFERS, ...BEST_SELLERS]
+// ─── Mock data ───────────────────────────────────────────────────────────────
+
+const CATEGORIES_CHIPS = [
+  { slug: 'cimento-argamassa', label: 'Cimento' },
+  { slug: 'tintas', label: 'Tinta' },
+  { slug: 'ferramentas', label: 'Ferramentas' },
+  { slug: 'madeira', label: 'Madeira' },
+  { slug: 'eletrica', label: 'Elétrica' },
+  { slug: 'hidraulica', label: 'Hidráulica' },
+  { slug: 'tijolos-blocos', label: 'Tijolos' },
+  { slug: 'pisos', label: 'Pisos' },
+  { slug: 'epi', label: 'EPI' },
+]
+
+type Product = {
+  id: string
+  name: string
+  store: string
+  price: number
+  originalPrice: number
+  discount: number
+  emoji: string
+  category: string
+  installments: number
+}
+
+const ALL_PRODUCTS: Product[] = [
+  { id: '1', name: 'Cimento CP II-E 50kg Votoran', store: 'Material Forte', price: 37.90, originalPrice: 49.90, discount: 24, emoji: '🧱', category: 'cimento-argamassa', installments: 10 },
+  { id: '2', name: 'Tinta Látex Suvinil Branco 18L', store: 'TintaMax', price: 189.00, originalPrice: 229.00, discount: 17, emoji: '🪣', category: 'tintas', installments: 6 },
+  { id: '3', name: 'Furadeira Bosch GSB 13 RE', store: 'FerraCentro', price: 349.00, originalPrice: 0, discount: 0, emoji: '🔩', category: 'ferramentas', installments: 12 },
+  { id: '4', name: 'Tijolo Cerâmico 6 Furos (un)', store: 'DepósitoABC', price: 1.20, originalPrice: 1.60, discount: 25, emoji: '🧱', category: 'tijolos-blocos', installments: 0 },
+  { id: '5', name: 'Vergalhão CA-50 3/8" 12m', store: 'AçoNorte', price: 48.70, originalPrice: 0, discount: 0, emoji: '⚙️', category: 'ferramentas', installments: 3 },
+  { id: '6', name: 'Fio Elétrico 2,5mm 100m', store: 'ElétricaPlus', price: 142.00, originalPrice: 168.00, discount: 15, emoji: '🔌', category: 'eletrica', installments: 6 },
+  { id: '7', name: 'Argamassa Colante AC-II 20kg', store: 'Material Forte', price: 22.50, originalPrice: 31.00, discount: 27, emoji: '🪣', category: 'cimento-argamassa', installments: 0 },
+  { id: '8', name: 'Registro de Gaveta 3/4"', store: 'HidroShop', price: 34.90, originalPrice: 44.90, discount: 22, emoji: '🔧', category: 'hidraulica', installments: 3 },
+  { id: '9', name: 'Capacete de Segurança Amarelo', store: 'EPI Brasil', price: 18.00, originalPrice: 25.00, discount: 28, emoji: '🪖', category: 'epi', installments: 0 },
+  { id: '10', name: 'Rolo de Lã Antigo 23cm', store: 'TintaMax', price: 12.90, originalPrice: 18.00, discount: 28, emoji: '🎨', category: 'tintas', installments: 0 },
+  { id: '11', name: 'Porcelanato 60x60 Polido (m²)', store: 'RevestMax', price: 79.90, originalPrice: 99.90, discount: 20, emoji: '🟫', category: 'pisos', installments: 6 },
+  { id: '12', name: 'Madeira Pinus Aparelhada 3x15 3m', store: 'MadeiraShop', price: 28.50, originalPrice: 0, discount: 0, emoji: '🪵', category: 'madeira', installments: 0 },
+]
 
 const SORT_OPTIONS = [
   { value: 'relevancia', label: 'Relevância' },
   { value: 'menor-preco', label: 'Menor preço' },
   { value: 'maior-preco', label: 'Maior preço' },
-  { value: 'mais-vendidos', label: 'Mais vendidos' },
+  { value: 'avaliacao', label: 'Avaliação' },
 ]
 
-const PRICE_RANGES = [
-  { value: 'todos', label: 'Qualquer valor' },
-  { value: '0-50', label: 'Até R$ 50' },
-  { value: '50-200', label: 'R$ 50 a R$ 200' },
-  { value: '200-500', label: 'R$ 200 a R$ 500' },
-  { value: '500+', label: 'Acima de R$ 500' },
-]
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function Logo() {
+function fmtPrice(v: number) {
+  return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+function filterProducts(products: Product[], q: string, cat: string, sort: string): Product[] {
+  let result = [...products]
+
+  if (q) {
+    const lower = q.toLowerCase()
+    result = result.filter(
+      (p) =>
+        p.name.toLowerCase().includes(lower) ||
+        p.store.toLowerCase().includes(lower) ||
+        p.category.toLowerCase().includes(lower)
+    )
+  }
+
+  if (cat) {
+    result = result.filter((p) => p.category === cat)
+  }
+
+  if (sort === 'menor-preco') result.sort((a, b) => a.price - b.price)
+  if (sort === 'maior-preco') result.sort((a, b) => b.price - a.price)
+  if (sort === 'avaliacao') result.sort((a, b) => b.discount - a.discount)
+
+  return result
+}
+
+// ─── ProductCard (inline) ─────────────────────────────────────────────────────
+
+function ProductCard({
+  product,
+  onAdd,
+}: {
+  product: Product
+  onAdd: (id: string) => void
+}) {
   return (
-    <span className="text-xl font-black tracking-tight leading-none">
-      <span className="text-white">Obra</span>
-      <span style={{ color: '#F05A28' }}>Já</span>
-    </span>
+    <div
+      className="bg-white rounded-xl overflow-hidden flex flex-col transition-all hover:shadow-md"
+      style={{ border: '1px solid #E5E5E5' }}
+      onMouseEnter={(e) => ((e.currentTarget as HTMLDivElement).style.borderColor = '#F05A28')}
+      onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.borderColor = '#E5E5E5')}
+    >
+      <div className="relative aspect-square bg-[#F5F5F5] flex items-center justify-center text-4xl">
+        <span>{product.emoji}</span>
+        {product.discount > 0 && (
+          <span
+            className="absolute top-2 left-2 text-[10px] font-bold rounded-full px-2 py-0.5"
+            style={{ background: '#FFB800', color: '#1A1A1A' }}
+          >
+            -{product.discount}%
+          </span>
+        )}
+      </div>
+
+      <div className="p-3 flex flex-col flex-1">
+        <p className="text-xs mb-0.5" style={{ color: '#9E9E9E' }}>{product.store}</p>
+        <p
+          className="text-sm font-medium leading-snug line-clamp-2 flex-1"
+          style={{ color: '#1A1A1A' }}
+        >
+          {product.name}
+        </p>
+
+        <div className="mt-2">
+          {product.originalPrice > 0 && (
+            <p className="text-xs text-gray-400 line-through">R$ {fmtPrice(product.originalPrice)}</p>
+          )}
+          <p className="text-base font-bold" style={{ color: '#1A1A1A' }}>
+            R$ {fmtPrice(product.price)}
+          </p>
+          {product.installments > 1 && (
+            <p className="text-xs text-green-600">
+              {product.installments}x de R$ {fmtPrice(product.price / product.installments)}
+            </p>
+          )}
+        </div>
+
+        <button
+          onClick={() => onAdd(product.id)}
+          className="mt-2 w-full text-sm font-semibold py-2 rounded-lg text-white transition-colors"
+          style={{ background: '#F05A28' }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#CC4010')}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#F05A28')}
+        >
+          + Adicionar
+        </button>
+      </div>
+    </div>
   )
 }
 
-function filterByPrice(products: Product[], range: string): Product[] {
-  if (range === 'todos') return products
-  if (range === '0-50') return products.filter((p) => p.price <= 50)
-  if (range === '50-200') return products.filter((p) => p.price > 50 && p.price <= 200)
-  if (range === '200-500') return products.filter((p) => p.price > 200 && p.price <= 500)
-  if (range === '500+') return products.filter((p) => p.price > 500)
-  return products
-}
-
-function sortProducts(products: Product[], sort: string): Product[] {
-  const copy = [...products]
-  if (sort === 'menor-preco') return copy.sort((a, b) => a.price - b.price)
-  if (sort === 'maior-preco') return copy.sort((a, b) => b.price - a.price)
-  if (sort === 'mais-vendidos') return copy.sort((a, b) => b.discount - a.discount)
-  return copy
-}
+// ─── Empty state ──────────────────────────────────────────────────────────────
 
 function EmptyState({ query }: { query: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center px-4">
-      <div className="text-6xl mb-4">🔍</div>
-      <h2 className="text-lg font-black mb-2" style={{ color: '#1A1A1A' }}>
+      <div
+        className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+        style={{ background: '#F5F5F5' }}
+      >
+        <svg width="28" height="28" fill="none" stroke="#9E9E9E" strokeWidth="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+        </svg>
+      </div>
+      <h2 className="text-base font-bold mb-2" style={{ color: '#1A1A1A' }}>
         Nenhum resultado encontrado
       </h2>
       <p className="text-sm max-w-xs" style={{ color: '#9E9E9E' }}>
         {query
           ? `Não encontramos produtos para "${query}". Tente palavras diferentes ou navegue pelas categorias.`
-          : 'Tente buscar por cimento, tinta, tijolos ou outra categoria.'}
+          : 'Tente buscar por cimento, tinta, ferramentas ou outra categoria.'}
       </p>
       <Link
         href="/home"
-        className="mt-6 px-6 py-2.5 rounded-xl text-sm font-bold text-white"
+        className="mt-6 px-6 py-2.5 rounded-lg text-sm font-semibold text-white"
         style={{ background: '#F05A28' }}
       >
-        Explorar marketplace
+        Ver todos os produtos
       </Link>
     </div>
   )
 }
 
+// ─── Main content (uses useSearchParams) ─────────────────────────────────────
+
 function BuscaContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get('q') ?? ''
-  const initialCategoria = searchParams.get('categoria') ?? ''
+  const initialCat = searchParams.get('categoria') ?? ''
 
   const [searchInput, setSearchInput] = useState(initialQuery)
-  const [activeCategoria, setActiveCategoria] = useState(initialCategoria)
+  const [activeCat, setActiveCat] = useState(initialCat)
   const [sortBy, setSortBy] = useState('relevancia')
-  const [priceRange, setPriceRange] = useState('todos')
   const [cartCount, setCartCount] = useState(0)
 
-  useEffect(() => {
-    setSearchInput(initialQuery)
-  }, [initialQuery])
-
-  useEffect(() => {
-    setActiveCategoria(initialCategoria)
-  }, [initialCategoria])
+  useEffect(() => { setSearchInput(initialQuery) }, [initialQuery])
+  useEffect(() => { setActiveCat(initialCat) }, [initialCat])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
     const params = new URLSearchParams()
     if (searchInput.trim()) params.set('q', searchInput.trim())
-    if (activeCategoria) params.set('categoria', activeCategoria)
-    window.location.href = `/busca?${params.toString()}`
+    if (activeCat) params.set('categoria', activeCat)
+    router.push(`/busca?${params.toString()}`)
   }
 
   function handleAddToCart(id: string) {
@@ -110,81 +208,54 @@ function BuscaContent() {
     void id
   }
 
-  const categorySlugMap: Record<string, string> = {
-    'cimento-argamassa': 'Cimento',
-    'tijolos-blocos': 'Tijolos',
-    eletrica: 'Elétrica',
-    hidraulica: 'Hidráulica',
-    tintas: 'Tintas',
-    pisos: 'Pisos',
-    ferramentas: 'Ferramentas',
-    'aco-ferro': 'Ferro',
-    epi: 'EPI',
-  }
-
-  let results = ALL_PRODUCTS
-
-  if (initialQuery) {
-    const q = initialQuery.toLowerCase()
-    results = results.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.store.toLowerCase().includes(q)
-    )
-  }
-
-  if (activeCategoria && categorySlugMap[activeCategoria]) {
-    results = results.filter((p) => p.category === categorySlugMap[activeCategoria])
-  }
-
-  results = filterByPrice(results, priceRange)
-  results = sortProducts(results, sortBy)
+  const results = filterProducts(ALL_PRODUCTS, initialQuery, activeCat, sortBy)
 
   return (
-    <div style={{ background: '#F5F5F5', minHeight: '100vh' }}>
-      {/* Header fixo */}
+    <div className="bg-[#F5F5F5] min-h-screen">
+
+      {/* Header */}
       <header
-        className="fixed top-0 left-0 right-0 z-50"
-        style={{
-          background: 'rgba(26,26,26,0.92)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
-        }}
+        className="fixed top-0 left-0 right-0 z-50 h-14"
+        style={{ background: '#1A1A1A', boxShadow: '0 1px 0 rgba(255,255,255,0.06)' }}
       >
-        <div className="container-app flex items-center gap-3" style={{ height: 'var(--header-height)' }}>
+        <div className="max-w-5xl mx-auto px-4 h-full flex items-center gap-3">
+          {/* Botão voltar */}
           <Link href="/home" aria-label="Voltar" className="flex-shrink-0">
-            <svg width="22" height="22" fill="none" stroke="white" strokeWidth="2.2" viewBox="0 0 24 24">
+            <svg width="20" height="20" fill="none" stroke="white" strokeWidth="2.2" viewBox="0 0 24 24">
               <path d="M19 12H5M12 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
-          <Link href="/home" className="flex-shrink-0">
-            <Logo />
-          </Link>
+
+          {/* Input busca */}
           <form onSubmit={handleSearch} className="flex-1">
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm select-none">🔎</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <svg width="15" height="15" fill="none" stroke="#9E9E9E" strokeWidth="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+                </svg>
+              </span>
               <input
                 type="search"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Buscar materiais, lojas..."
-                className="w-full py-2 pl-9 pr-3 rounded-xl text-sm outline-none"
-                style={{ background: '#2D2D2D', color: '#fff', border: '1px solid #3D3D3D' }}
+                className="w-full py-2 pl-9 pr-3 rounded-lg text-sm outline-none bg-white border border-[#E5E5E5]"
+                style={{ color: '#1A1A1A' }}
+                autoFocus
               />
             </div>
           </form>
+
+          {/* Carrinho */}
           <Link href="/carrinho" className="relative flex-shrink-0" aria-label="Carrinho">
-            <svg width="24" height="24" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 01-8 0" />
+            <svg width="22" height="22" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+              <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             {cartCount > 0 && (
               <span
-                className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full text-white text-[10px] font-black"
-                style={{ background: '#F05A28', padding: '0 4px' }}
+                className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white font-bold"
+                style={{ background: '#F05A28', fontSize: '10px', padding: '0 3px' }}
               >
                 {cartCount}
               </span>
@@ -193,84 +264,67 @@ function BuscaContent() {
         </div>
       </header>
 
-      <main className="container-app pb-20" style={{ paddingTop: 'calc(var(--header-height) + 1rem)' }}>
+      <main className="max-w-5xl mx-auto px-4 pt-16 pb-8">
 
-        {/* Filtro de categorias */}
-        <div className="flex gap-2 pb-2 overflow-x-auto mb-4">
+        {/* Chips de categoria */}
+        <div className="flex gap-2 py-3 overflow-x-auto scrollbar-none">
           <button
-            onClick={() => setActiveCategoria('')}
-            className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+            onClick={() => setActiveCat('')}
+            className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors"
             style={{
-              background: activeCategoria === '' ? '#F05A28' : '#fff',
-              color: activeCategoria === '' ? '#fff' : '#1A1A1A',
-              border: activeCategoria === '' ? 'none' : '1px solid #E0E0E0',
+              background: activeCat === '' ? '#F05A28' : '#fff',
+              color: activeCat === '' ? '#fff' : '#1A1A1A',
+              borderColor: activeCat === '' ? '#F05A28' : '#E5E5E5',
             }}
           >
             Todos
           </button>
-          {CATEGORIES.map((cat) => (
+          {CATEGORIES_CHIPS.map((cat) => (
             <button
               key={cat.slug}
-              onClick={() => setActiveCategoria(activeCategoria === cat.slug ? '' : cat.slug)}
-              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+              onClick={() => setActiveCat(activeCat === cat.slug ? '' : cat.slug)}
+              className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors"
               style={{
-                background: activeCategoria === cat.slug ? '#F05A28' : '#fff',
-                color: activeCategoria === cat.slug ? '#fff' : '#1A1A1A',
-                border: activeCategoria === cat.slug ? 'none' : '1px solid #E0E0E0',
+                background: activeCat === cat.slug ? '#F05A28' : '#fff',
+                color: activeCat === cat.slug ? '#fff' : '#1A1A1A',
+                borderColor: activeCat === cat.slug ? '#F05A28' : '#E5E5E5',
               }}
             >
-              <span>{cat.emoji}</span>
-              <span>{cat.label}</span>
+              {cat.label}
             </button>
           ))}
         </div>
 
-        {/* Filtros: ordenar + faixa de preço */}
-        <div className="flex gap-2 mb-4">
-          <div className="relative flex-1">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="w-full appearance-none rounded-xl px-3 py-2 text-xs font-bold pr-7 outline-none"
-              style={{ background: '#fff', color: '#1A1A1A', border: '1px solid #E0E0E0' }}
-            >
-              {SORT_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[10px]" style={{ color: '#9E9E9E' }}>▼</span>
-          </div>
-          <div className="relative flex-1">
-            <select
-              value={priceRange}
-              onChange={(e) => setPriceRange(e.target.value)}
-              className="w-full appearance-none rounded-xl px-3 py-2 text-xs font-bold pr-7 outline-none"
-              style={{ background: '#fff', color: '#1A1A1A', border: '1px solid #E0E0E0' }}
-            >
-              {PRICE_RANGES.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-            <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[10px]" style={{ color: '#9E9E9E' }}>▼</span>
+        {/* Barra de sort + contagem */}
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-xs" style={{ color: '#9E9E9E' }}>
+            {results.length} produto{results.length !== 1 ? 's' : ''} encontrado{results.length !== 1 ? 's' : ''}
+          </p>
+          <div className="flex items-center gap-2">
+            <span className="text-xs hidden sm:inline" style={{ color: '#9E9E9E' }}>Ordenar:</span>
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="appearance-none text-xs font-medium pl-3 pr-7 py-1.5 rounded-lg border border-[#E5E5E5] bg-white outline-none"
+                style={{ color: '#1A1A1A' }}
+              >
+                {SORT_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[10px]" style={{ color: '#9E9E9E' }}>▼</span>
+            </div>
           </div>
         </div>
 
-        {/* Contagem de resultados */}
-        <p className="text-xs font-bold mb-4" style={{ color: '#9E9E9E' }}>
-          {results.length > 0
-            ? `${results.length} produto${results.length !== 1 ? 's' : ''} encontrado${results.length !== 1 ? 's' : ''}`
-            : 'Nenhum produto encontrado'}
-        </p>
-
-        {/* Grade de produtos ou estado vazio */}
+        {/* Grid ou estado vazio */}
         {results.length === 0 ? (
           <EmptyState query={initialQuery} />
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {results.map((p) => (
-              <div key={p.id} className="flex justify-center">
-                <ProductCard product={p} onAdd={handleAddToCart} />
-              </div>
+              <ProductCard key={p.id} product={p} onAdd={handleAddToCart} />
             ))}
           </div>
         )}
@@ -279,11 +333,13 @@ function BuscaContent() {
   )
 }
 
+// ─── Page export (Suspense wrapper para useSearchParams) ──────────────────────
+
 export default function BuscaPage() {
   return (
     <Suspense
       fallback={
-        <div style={{ background: '#F5F5F5', minHeight: '100vh' }} className="flex items-center justify-center">
+        <div className="bg-[#F5F5F5] min-h-screen flex items-center justify-center">
           <p className="text-sm" style={{ color: '#9E9E9E' }}>Carregando busca...</p>
         </div>
       }

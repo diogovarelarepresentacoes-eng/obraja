@@ -61,129 +61,117 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Left panel — brand (hidden on mobile) */}
-      <div
-        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
-        style={{ background: '#1A1A1A' }}
-      >
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-        {/* Orange glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: '480px',
-            height: '480px',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(240,90,40,0.22) 0%, transparent 70%)',
-            filter: 'blur(120px)',
-          }}
-        />
+      {/* Left panel — brand */}
+      <div className="hidden lg:flex lg:w-5/12 flex-col justify-between p-12 bg-[#1A1A1A]">
+        <Link href="/" aria-label="Página inicial ObraJá">
+          <span className="text-2xl font-black tracking-tight">
+            <span className="text-white">Obra</span>
+            <span className="text-[#F05A28]">Já</span>
+          </span>
+        </Link>
 
-        {/* Top logo */}
-        <div className="relative z-10">
-          <Link href="/" aria-label="Página inicial ObraJá">
-            <span className="text-2xl font-black tracking-tight">
-              <span className="text-white">Obra</span>
-              <span style={{ color: '#F05A28' }}>Já</span>
-            </span>
-          </Link>
-        </div>
-
-        {/* Center content */}
-        <div className="relative z-10 space-y-8">
+        <div className="space-y-8">
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#F05A28' }}>
+            <p className="text-xs font-bold tracking-widest uppercase mb-4 text-[#F05A28]">
               O marketplace da construção civil
             </p>
-            <h2 className="text-4xl font-black leading-tight text-white">
+            <h2 className="text-3xl font-black leading-snug text-white">
               Tudo que sua obra<br />precisa, entregue<br />na hora certa.
             </h2>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="space-y-4">
             {[
-              { value: '500+', label: 'Lojas parceiras' },
-              { value: '50k', label: 'Produtos' },
-              { value: '10k', label: 'Clientes ativos' },
-            ].map(({ value, label }) => (
-              <div
-                key={label}
-                className="rounded-2xl p-4"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-              >
-                <p className="text-2xl font-black" style={{ color: '#F05A28' }}>{value}</p>
-                <p className="text-xs mt-1" style={{ color: '#9E9E9E' }}>{label}</p>
+              {
+                icon: (
+                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                ),
+                title: 'Compra 100% segura',
+                desc: 'Pagamento protegido e garantia em todas as compras',
+              },
+              {
+                icon: (
+                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <rect x="1" y="3" width="15" height="13" rx="1" />
+                    <path d="M16 8h4l3 3v5h-7V8z" />
+                    <circle cx="5.5" cy="18.5" r="2.5" />
+                    <circle cx="18.5" cy="18.5" r="2.5" />
+                  </svg>
+                ),
+                title: 'Entrega rastreada',
+                desc: 'Acompanhe em tempo real até a sua obra',
+              },
+              {
+                icon: (
+                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <line x1="18" y1="20" x2="18" y2="10" />
+                    <line x1="12" y1="20" x2="12" y2="4" />
+                    <line x1="6" y1="20" x2="6" y2="14" />
+                  </svg>
+                ),
+                title: 'Melhores preços',
+                desc: 'Compare lojas e escolha o melhor custo-benefício',
+              },
+            ].map(({ icon, title, desc }) => (
+              <div key={title} className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-white/5 text-[#F05A28]">
+                  {icon}
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">{title}</p>
+                  <p className="text-xs text-[#9E9E9E] mt-0.5">{desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom tagline */}
-        <div className="relative z-10">
-          <p className="text-sm" style={{ color: '#9E9E9E' }}>
-            Materiais de construção com delivery rápido e preço justo.
-          </p>
-        </div>
+        <p className="text-sm text-[#9E9E9E]">
+          Materiais de construção com delivery rápido e preço justo.
+        </p>
       </div>
 
       {/* Right panel — form */}
       <div className="flex-1 flex flex-col bg-white">
-        {/* Mobile-only top nav */}
-        <nav className="flex items-center justify-between px-6 py-4 lg:hidden">
+        {/* Mobile nav */}
+        <nav className="flex items-center justify-between px-6 py-4 lg:hidden border-b border-[#E5E5E5]">
           <Link href="/" aria-label="Página inicial ObraJá">
             <span className="text-xl font-black tracking-tight">
-              <span style={{ color: '#1A1A1A' }}>Obra</span>
-              <span style={{ color: '#F05A28' }}>Já</span>
+              <span className="text-[#1A1A1A]">Obra</span>
+              <span className="text-[#F05A28]">Já</span>
             </span>
           </Link>
           <Link
             href="/cadastro"
-            className="text-sm font-semibold px-4 py-2 rounded-xl text-white"
-            style={{ background: '#F05A28' }}
+            className="text-sm font-semibold px-4 py-2 rounded-lg text-white bg-[#F05A28] hover:bg-[#CC4010] transition-colors"
           >
             Cadastre-se
           </Link>
         </nav>
 
-        {/* Desktop-only top nav */}
-        <nav className="hidden lg:flex items-center justify-end px-10 py-6">
-          <span className="text-sm mr-3" style={{ color: '#9E9E9E' }}>
-            Ainda não tem conta?
-          </span>
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center justify-end px-10 py-5 border-b border-[#E5E5E5]">
+          <span className="text-sm text-[#9E9E9E] mr-3">Ainda não tem conta?</span>
           <Link
             href="/cadastro"
-            className="text-sm font-bold px-5 py-2.5 rounded-xl text-white"
-            style={{ background: 'linear-gradient(135deg, #F05A28, #CC4010)', boxShadow: '0 4px 14px rgba(240,90,40,0.3)' }}
+            className="text-sm font-bold px-5 py-2 rounded-lg text-white bg-[#F05A28] hover:bg-[#CC4010] transition-colors"
           >
             Cadastre-se grátis
           </Link>
         </nav>
 
         {/* Form area */}
-        <div className="flex-1 flex flex-col justify-center px-6 py-8 lg:px-16 xl:px-24 max-w-lg mx-auto w-full">
+        <div className="flex-1 flex flex-col justify-center px-6 py-12 lg:px-16 xl:px-24 max-w-md mx-auto w-full">
           <div className="mb-8">
-            <h1 className="text-3xl font-black mb-2" style={{ color: '#1A1A1A' }}>
-              Bem-vindo de volta
-            </h1>
-            <p className="text-sm" style={{ color: '#9E9E9E' }}>
-              Acesse sua conta ObraJá e continue comprando
-            </p>
+            <h1 className="text-2xl font-black text-[#1A1A1A] mb-2">Bem-vindo de volta</h1>
+            <p className="text-sm text-[#9E9E9E]">Acesse sua conta ObraJá e continue comprando</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div>
-              <label htmlFor="email" className="block text-xs font-bold mb-2" style={{ color: '#1A1A1A' }}>
+              <label htmlFor="email" className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">
                 E-mail
               </label>
               <input
@@ -196,21 +184,16 @@ export default function LoginPage() {
                 autoComplete="email"
                 placeholder="seu@email.com"
                 aria-describedby={error ? 'login-error' : undefined}
-                className="w-full px-4 py-3.5 rounded-2xl text-sm outline-none transition-all"
-                style={{
-                  background: '#F5F5F5',
-                  border: `1.5px solid ${error ? '#EF4444' : '#E8E8E8'}`,
-                  color: '#1A1A1A',
-                }}
+                className="w-full px-4 py-3 rounded-lg text-sm bg-white border border-[#E5E5E5] text-[#1A1A1A] placeholder-[#9E9E9E] outline-none focus:border-[#F05A28] focus:ring-2 focus:ring-[#F05A28]/10 transition-colors"
               />
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-2">
-                <label htmlFor="password" className="block text-xs font-bold" style={{ color: '#1A1A1A' }}>
+              <div className="flex justify-between items-center mb-1.5">
+                <label htmlFor="password" className="block text-sm font-semibold text-[#1A1A1A]">
                   Senha
                 </label>
-                <Link href="/forgot-password" className="text-xs font-semibold" style={{ color: '#F05A28' }}>
+                <Link href="/forgot-password" className="text-xs font-semibold text-[#F05A28] hover:text-[#CC4010] transition-colors">
                   Esqueci minha senha
                 </Link>
               </div>
@@ -225,24 +208,24 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   placeholder="Sua senha"
                   aria-describedby={error ? 'login-error' : undefined}
-                  className="w-full px-4 py-3.5 pr-12 rounded-2xl text-sm outline-none transition-all"
-                  style={{
-                    background: '#F5F5F5',
-                    border: `1.5px solid ${error ? '#EF4444' : '#E8E8E8'}`,
-                    color: '#1A1A1A',
-                  }}
+                  className="w-full px-4 py-3 pr-12 rounded-lg text-sm bg-white border border-[#E5E5E5] text-[#1A1A1A] placeholder-[#9E9E9E] outline-none focus:border-[#F05A28] focus:ring-2 focus:ring-[#F05A28]/10 transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1"
-                  style={{ color: '#9E9E9E' }}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#9E9E9E] hover:text-[#1A1A1A] transition-colors"
                 >
                   {showPassword ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
                   )}
                 </button>
               </div>
@@ -252,10 +235,13 @@ export default function LoginPage() {
               <div
                 id="login-error"
                 role="alert"
-                className="flex items-center gap-2.5 px-4 py-3.5 rounded-2xl text-sm font-medium"
-                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626' }}
+                className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium bg-red-50 border border-red-200 text-[#DC2626]"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
                 {error}
               </div>
             )}
@@ -264,28 +250,30 @@ export default function LoginPage() {
               type="submit"
               disabled={loading}
               aria-busy={loading}
-              className="w-full py-4 rounded-2xl text-sm font-black text-white transition-all mt-2"
-              style={{
-                background: loading ? '#CC4010' : 'linear-gradient(135deg, #F05A28, #CC4010)',
-                boxShadow: loading ? 'none' : '0 8px 28px rgba(240,90,40,0.4)',
-                opacity: loading ? 0.8 : 1,
-                cursor: loading ? 'not-allowed' : 'pointer',
-              }}
+              className="w-full py-3 rounded-lg text-sm font-bold text-white bg-[#F05A28] hover:bg-[#CC4010] disabled:opacity-70 disabled:cursor-not-allowed transition-colors mt-2"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                  <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                  </svg>
                   Entrando...
                 </span>
               ) : (
-                'Entrar na conta →'
+                'Entrar'
               )}
             </button>
           </form>
 
-          <p className="text-center text-sm mt-8" style={{ color: '#9E9E9E' }}>
-            Ainda não possui cadastro?{' '}
-            <Link href="/cadastro" className="font-bold" style={{ color: '#F05A28' }}>
+          <div className="flex items-center gap-4 my-6">
+            <div className="flex-1 h-px bg-[#E5E5E5]" />
+            <span className="text-xs text-[#9E9E9E]">ou</span>
+            <div className="flex-1 h-px bg-[#E5E5E5]" />
+          </div>
+
+          <p className="text-center text-sm text-[#9E9E9E]">
+            Não tem conta?{' '}
+            <Link href="/cadastro" className="font-bold text-[#F05A28] hover:text-[#CC4010] transition-colors">
               Criar conta grátis
             </Link>
           </p>
