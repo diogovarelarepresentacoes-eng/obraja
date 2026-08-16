@@ -90,7 +90,12 @@ export default function CustomerHome() {
 
       <header
         className="fixed top-0 left-0 right-0 z-50"
-        style={{ background: '#1A1A1A', boxShadow: '0 2px 12px rgba(0,0,0,0.2)' }}
+        style={{
+          background: 'rgba(26,26,26,0.90)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
+        }}
       >
         <div className="container-app flex items-center gap-3" style={{ height: 'var(--header-height)' }}>
           <Logo />
@@ -137,7 +142,7 @@ export default function CustomerHome() {
             className="flex-shrink-0 ml-3 text-xs font-black px-3 py-2 rounded-xl"
             style={{ background: '#fff', color: '#F05A28' }}
           >
-            Comprar
+            Ver marketplace
           </Link>
         </div>
 
