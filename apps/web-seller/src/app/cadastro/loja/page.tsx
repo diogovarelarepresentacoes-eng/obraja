@@ -146,8 +146,10 @@ export default function CadastroLojaPage() {
         </header>
         <main className="flex-1 flex items-center justify-center px-6 py-16">
           <div className="max-w-lg w-full text-center">
-            <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">⏳</span>
+            <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 text-[#F05A28]">
+              <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+              </svg>
             </div>
             <h1 className="text-3xl font-black text-[#1A1A1A] mb-3">Cadastro enviado!</h1>
             <p className="text-[#9E9E9E] text-lg mb-6">
@@ -156,21 +158,33 @@ export default function CadastroLojaPage() {
             </p>
             <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5 text-left mb-6 space-y-3">
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">📧</span>
+                <div className="w-8 h-8 rounded-lg bg-orange-100 text-[#F05A28] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Confirme seu e-mail</div>
                   <div className="text-xs text-[#9E9E9E]">Enviamos um link de confirmação para <strong>{form.email}</strong></div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">📄</span>
+                <div className="w-8 h-8 rounded-lg bg-orange-100 text-[#F05A28] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Documentos em análise</div>
                   <div className="text-xs text-[#9E9E9E]">Contrato social e documentos enviados para verificação</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">🏪</span>
+                <div className="w-8 h-8 rounded-lg bg-orange-100 text-[#F05A28] flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Sua loja será ativada</div>
                   <div className="text-xs text-[#9E9E9E]">Após aprovação você poderá cadastrar produtos e receber pedidos</div>
@@ -195,7 +209,11 @@ export default function CadastroLojaPage() {
 
       <main className="flex-1 px-6 py-12 max-w-2xl mx-auto w-full">
         <div className="flex items-center gap-2 mb-8">
-          <span className="text-2xl">🏪</span>
+          <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#F05A28] flex items-center justify-center shrink-0">
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
           <div>
             <div className="text-xs font-bold text-[#F05A28] uppercase tracking-wider">Cadastro</div>
             <div className="text-xl font-black text-[#1A1A1A]">Loja de Materiais</div>
@@ -218,7 +236,12 @@ export default function CadastroLojaPage() {
           <div className="space-y-5">
             <h2 className="text-2xl font-black text-[#1A1A1A]">Dados da empresa</h2>
             <div className="bg-[#FFF3EE] border border-[#FFD4BC] rounded-xl px-4 py-3 text-xs text-[#CC4010]">
-              🔒 Verificamos seu CNPJ junto à Receita Federal para garantir a segurança da plataforma.
+              <div className="flex items-center gap-2">
+                <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="shrink-0">
+                  <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <span>Verificamos seu CNPJ junto à Receita Federal para garantir a segurança da plataforma.</span>
+              </div>
             </div>
             <Field label="CNPJ" required>
               <input className={INPUT} placeholder="00.000.000/0000-00" value={form.cnpj}
@@ -296,7 +319,13 @@ export default function CadastroLojaPage() {
           <div className="space-y-5">
             <h2 className="text-2xl font-black text-[#1A1A1A]">Documentos da empresa</h2>
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 text-xs text-yellow-800">
-              ⚠️ Os documentos são analisados manualmente antes da ativação da loja. Aceito: PDF, JPG, PNG (máx. 10 MB cada).
+              <div className="flex items-start gap-2">
+                <svg className="shrink-0 mt-0.5" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>Os documentos são analisados manualmente antes da ativação da loja. Aceito: PDF, JPG, PNG (máx. 10 MB cada).</span>
+              </div>
             </div>
             <FileUpload
               label="Contrato Social"
@@ -389,7 +418,7 @@ export default function CadastroLojaPage() {
             ? <button onClick={handleNext} className="bg-[#F05A28] text-white font-bold px-8 py-3 rounded-xl hover:bg-[#CC4010] transition-all active:scale-95">Continuar →</button>
             : <button disabled={loading} onClick={handleSubmit}
                 className="bg-[#F05A28] text-white font-bold px-8 py-3 rounded-xl hover:bg-[#CC4010] transition-all active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed">
-                {loading ? 'Enviando cadastro…' : 'Enviar para análise 📤'}
+                {loading ? 'Enviando cadastro…' : 'Enviar para análise'}
               </button>
           }
         </div>

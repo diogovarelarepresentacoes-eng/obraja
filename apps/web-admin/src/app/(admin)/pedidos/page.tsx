@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -92,7 +92,7 @@ export default function PedidosPage() {
           <tbody className="divide-y divide-[#F2F2F2]">
             {filtered.map(o => (
               <tr key={o.id} className="hover:bg-[#FAFAFA] transition-colors">
-                <td className="px-6 py-4 font-mono text-sm font-bold text-[#1A1A1A]">{o.id}</td>
+                <td className="px-6 py-4 text-sm font-bold text-[#1A1A1A]">{o.id}</td>
                 <td className="px-6 py-4 text-sm text-[#1A1A1A]">{o.buyer}</td>
                 <td className="px-6 py-4 text-sm text-[#9E9E9E]">{o.seller}</td>
                 <td className="px-6 py-4 text-sm text-center text-[#1A1A1A] font-medium">{o.items}</td>

@@ -244,7 +244,7 @@ export default function LandingPage() {
           </div>
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-[#444] text-sm">© 2026 ObraJá. Todos os direitos reservados.</p>
-            <p className="text-[#444] text-sm">Feito com ❤️ para a construção civil brasileira</p>
+            <p className="text-[#444] text-sm">Feito para a construção civil brasileira</p>
           </div>
         </div>
       </footer>

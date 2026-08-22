@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -7,7 +7,7 @@ const suppliers = [
     name: 'Materiais Belo',
     type: 'Loja',
     initials: 'MB',
-    color: '#F1591D',
+    color: '#F05A28',
     rating: 4.8,
     orders: 47,
     spent: 'R$ 123.450',
@@ -172,7 +172,7 @@ export default function FornecedoresPage() {
           <div className="text-xs font-semibold uppercase tracking-wide mb-0.5" style={{ color: '#9E9E9E' }}>
             Gasto Total (12 meses)
           </div>
-          <div className="text-xl font-black" style={{ color: '#F1591D' }}>
+          <div className="text-xl font-black" style={{ color: '#F05A28' }}>
             R$ 370.290
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function FornecedoresPage() {
         <div className="ml-auto">
           <button
             className="px-5 py-2 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
-            style={{ background: '#F1591D', color: '#fff' }}
+            style={{ background: '#F05A28', color: '#fff' }}
           >
             + Adicionar Fornecedor
           </button>
@@ -263,7 +263,7 @@ export default function FornecedoresPage() {
                 </div>
                 <div>
                   <div className="text-xs" style={{ color: '#9E9E9E' }}>Gasto Total</div>
-                  <div className="text-sm font-bold" style={{ color: '#F1591D' }}>
+                  <div className="text-sm font-bold" style={{ color: '#F05A28' }}>
                     {supplier.spent}
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function FornecedoresPage() {
                 </button>
                 <button
                   className="flex-1 py-2 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
-                  style={{ background: '#F1591D', color: '#fff' }}
+                  style={{ background: '#F05A28', color: '#fff' }}
                 >
                   Solicitar Cotação
                 </button>

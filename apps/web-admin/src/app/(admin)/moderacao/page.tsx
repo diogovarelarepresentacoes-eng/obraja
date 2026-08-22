@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -121,8 +121,8 @@ export default function ModeracaoPage() {
             <tbody className="divide-y divide-[#F2F2F2]">
               {DISPUTES.map(d => (
                 <tr key={d.id} className="hover:bg-[#FAFAFA] transition-colors">
-                  <td className="px-6 py-4 font-mono text-sm font-bold text-[#9E9E9E]">{d.id}</td>
-                  <td className="px-6 py-4 font-mono text-sm font-bold text-[#1A1A1A]">{d.orderId}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-[#9E9E9E]">{d.id}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-[#1A1A1A]">{d.orderId}</td>
                   <td className="px-6 py-4 text-sm text-[#1A1A1A]">{d.buyer}</td>
                   <td className="px-6 py-4 text-sm text-[#9E9E9E]">{d.seller}</td>
                   <td className="px-6 py-4 text-sm text-[#666]">{d.reason}</td>

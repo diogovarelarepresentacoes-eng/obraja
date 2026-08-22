@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -34,7 +34,7 @@ const STATUS_MAP: Record<InvoiceStatus, { label: string; color: string; bg: stri
   em_aberto: { label: 'Em Aberto', color: '#2563eb', bg: '#eff6ff', border: '#bfdbfe' },
 }
 
-const PRIMARY = '#F1591D'
+const PRIMARY = '#F05A28'
 
 export default function FinanceiroPage() {
   const [statusFilter, setStatusFilter] = useState<'all' | InvoiceStatus>('all')
@@ -112,7 +112,7 @@ export default function FinanceiroPage() {
                 return (
                   <tr key={inv.id} style={{ borderBottom: i < filtered.length - 1 ? '1px solid #F8F8F8' : 'none' }}
                     className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 text-sm font-mono font-bold" style={{ color: '#1A1A1A' }}>{inv.id}</td>
+                    <td className="px-6 py-4 text-sm font-bold text-[#1A1A1A]">{inv.id}</td>
                     <td className="px-6 py-4 text-sm font-medium" style={{ color: '#1A1A1A' }}>{inv.orderId}</td>
                     <td className="px-6 py-4 text-sm" style={{ color: '#666' }}>{inv.supplier}</td>
                     <td className="px-6 py-4 text-sm font-bold" style={{ color: '#1A1A1A' }}>{currency(inv.amount)}</td>

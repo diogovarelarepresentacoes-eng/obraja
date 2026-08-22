@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -96,11 +96,11 @@ export function SidebarNav() {
         <div className="flex flex-col gap-1 px-6 pt-7 pb-6 border-b border-white/10">
           <div className="text-2xl font-black tracking-tight">
             <span style={{ color: '#fff' }}>Obra</span>
-            <span style={{ color: '#F1591D' }}>Já</span>
+            <span style={{ color: '#F05A28' }}>Já</span>
           </div>
           <span
             className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: '#F1591D' }}
+            style={{ color: '#F05A28' }}
           >
             Construtora
           </span>
@@ -116,12 +116,12 @@ export function SidebarNav() {
                 href={item.href}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative"
                 style={{
-                  color: isActive ? '#F1591D' : '#9E9E9E',
+                  color: isActive ? '#F05A28' : '#9E9E9E',
                   background: isActive ? 'rgba(241,89,29,0.10)' : 'transparent',
-                  borderLeft: isActive ? '3px solid #F1591D' : '3px solid transparent',
+                  borderLeft: isActive ? '3px solid #F05A28' : '3px solid transparent',
                 }}
               >
-                <span style={{ color: isActive ? '#F1591D' : '#9E9E9E' }}>
+                <span style={{ color: isActive ? '#F05A28' : '#9E9E9E' }}>
                   {item.icon}
                 </span>
                 {item.label}
@@ -134,7 +134,7 @@ export function SidebarNav() {
         <div className="px-4 py-5 border-t border-white/10 flex items-center gap-3">
           <div
             className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-            style={{ background: '#F1591D', color: '#fff' }}
+            style={{ background: '#F05A28', color: '#fff' }}
           >
             CH
           </div>
@@ -171,7 +171,7 @@ export function SidebarNav() {
             </svg>
             <span
               className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full"
-              style={{ background: '#F1591D' }}
+              style={{ background: '#F05A28' }}
             />
           </button>
           {/* Avatar */}

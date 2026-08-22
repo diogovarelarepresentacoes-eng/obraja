@@ -100,7 +100,12 @@ export default function AprovacoesPage() {
       {/* Alerta documentos pendentes */}
       {pendingDelivery > 0 && (
         <div className="bg-green-50 border border-green-200 rounded-xl px-5 py-4 flex items-center gap-3">
-          <span className="text-xl">🛵</span>
+          <div className="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center shrink-0 text-green-700">
+            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" />
+              <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+            </svg>
+          </div>
           <div>
             <div className="font-bold text-green-800 text-sm">{pendingDelivery} entregador{pendingDelivery > 1 ? 'es' : ''} aguardando verificação de documentos</div>
             <div className="text-xs text-green-700">Revise CNH, CRLV e selfie antes de aprovar</div>
@@ -163,13 +168,16 @@ export default function AprovacoesPage() {
                       {TYPE_LABEL[a.type]}
                     </span>
                   </td>
-                  <td className="px-5 py-4 text-sm font-mono text-[#1A1A1A]">
+                  <td className="px-5 py-4 text-sm text-[#1A1A1A]">
                     {a.cnpj ?? a.cpf ?? '—'}
                   </td>
                   <td className="px-5 py-4 text-sm text-[#9E9E9E]">{a.city}, {a.state}</td>
                   <td className="px-5 py-4">
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#9E9E9E]">
-                      📄 {a.docsCount}
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9E9E9E]">
+                      <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+                      </svg>
+                      {a.docsCount}
                     </span>
                   </td>
                   <td className="px-5 py-4 text-sm text-[#9E9E9E]">{new Date(a.submittedAt).toLocaleDateString('pt-BR')}</td>

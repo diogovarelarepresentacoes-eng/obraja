@@ -1,4 +1,4 @@
-const orders = [
+﻿const orders = [
   { id: '#2891', supplier: 'Materiais Belo', item: 'Cimento CP-II (500 sacos)', value: 'R$ 15.950', status: 'Em entrega', date: '01/08/2026', statusColor: '#f97316', statusBg: '#fff7ed' },
   { id: '#2890', supplier: 'DepósitoMax', item: 'Tinta Acrílica (48 latas)', value: 'R$ 10.555', status: 'Entregue', date: '31/07/2026', statusColor: '#16a34a', statusBg: '#f0fdf4' },
   { id: '#2889', supplier: 'Construfácil Sul', item: 'Fio Elétrico 2,5mm (20 rolos)', value: 'R$ 3.780', status: 'Entregue', date: '29/07/2026', statusColor: '#16a34a', statusBg: '#f0fdf4' },
@@ -46,7 +46,7 @@ export default function PedidosPage() {
                 className="text-xs rounded-full px-1.5 py-0.5"
                 style={
                   i === 0
-                    ? { background: '#F1591D', color: '#fff' }
+                    ? { background: '#F05A28', color: '#fff' }
                     : { background: '#E5E5E5', color: '#9E9E9E' }
                 }
               >
@@ -166,7 +166,7 @@ export default function PedidosPage() {
         >
           <div className="text-sm font-semibold" style={{ color: '#1A1A1A' }}>
             Total do período:{' '}
-            <span style={{ color: '#F1591D' }}>R$ 234.870</span>
+            <span style={{ color: '#F05A28' }}>R$ 234.870</span>
           </div>
           {/* Pagination */}
           <div className="flex items-center gap-1">
@@ -182,7 +182,7 @@ export default function PedidosPage() {
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-semibold transition-colors"
                 style={
                   p === 1
-                    ? { background: '#F1591D', color: '#fff' }
+                    ? { background: '#F05A28', color: '#fff' }
                     : { color: '#9E9E9E' }
                 }
               >

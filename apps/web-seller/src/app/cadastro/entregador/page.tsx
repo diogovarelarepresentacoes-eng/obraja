@@ -4,10 +4,10 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 
 const TIPOS_VEICULO = [
-  { value: 'moto', label: '🛵 Motocicleta', desc: 'Entregas ágeis em área urbana' },
-  { value: 'carro', label: '🚗 Carro', desc: 'Cargas pequenas e médias' },
-  { value: 'van', label: '🚐 Van / Utilitário', desc: 'Cargas médias e paletes' },
-  { value: 'caminhao_leve', label: '🚛 Caminhão leve', desc: 'Cargas pesadas até 3,5t' },
+  { value: 'moto', label: 'Motocicleta', desc: 'Entregas ágeis em área urbana' },
+  { value: 'carro', label: 'Carro', desc: 'Cargas pequenas e médias' },
+  { value: 'van', label: 'Van / Utilitário', desc: 'Cargas médias e paletes' },
+  { value: 'caminhao_leve', label: 'Caminhão leve', desc: 'Cargas pesadas até 3,5t' },
 ]
 
 function validateCpf(cpf: string): boolean {
@@ -221,8 +221,10 @@ export default function CadastroEntregadorPage() {
         </header>
         <main className="flex-1 flex items-center justify-center px-6 py-16">
           <div className="max-w-lg w-full text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">🛵</span>
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
+              <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
             </div>
             <h1 className="text-3xl font-black text-[#1A1A1A] mb-3">Cadastro enviado!</h1>
             <p className="text-[#9E9E9E] text-lg mb-6">
@@ -230,21 +232,33 @@ export default function CadastroEntregadorPage() {
             </p>
             <div className="bg-white rounded-2xl border border-[#E5E5E5] p-5 text-left mb-6 space-y-3">
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">📧</span>
+                <div className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Confirme seu e-mail</div>
                   <div className="text-xs text-[#9E9E9E]">Link de confirmação enviado para <strong>{form.email}</strong></div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">🪪</span>
+                <div className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Documentos em análise</div>
                   <div className="text-xs text-[#9E9E9E]">CNH, CRLV e documentos pessoais em verificação</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-lg mt-0.5">📱</span>
+                <div className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0 mt-0.5">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Baixe o app do entregador</div>
                   <div className="text-xs text-[#9E9E9E]">Após aprovação, você acessa as entregas pelo app ObraJá Entregador</div>
@@ -275,7 +289,12 @@ export default function CadastroEntregadorPage() {
 
       <main className="flex-1 px-6 py-12 max-w-2xl mx-auto w-full">
         <div className="flex items-center gap-2 mb-8">
-          <span className="text-2xl">🛵</span>
+          <div className="w-10 h-10 rounded-xl bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <rect x="1" y="3" width="15" height="13" rx="1" /><path d="M16 8h4l3 3v5h-7V8z" />
+              <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
+            </svg>
+          </div>
           <div>
             <div className="text-xs font-bold text-green-600 uppercase tracking-wider">Cadastro</div>
             <div className="text-xl font-black text-[#1A1A1A]">Entregador</div>
@@ -298,7 +317,12 @@ export default function CadastroEntregadorPage() {
           <div className="space-y-5">
             <h2 className="text-2xl font-black text-[#1A1A1A]">Seus dados pessoais</h2>
             <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-xs text-green-800">
-              🔒 Seus dados são verificados e protegidos. Utilizamos criptografia para garantir sua privacidade.
+              <div className="flex items-center gap-2">
+                <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="shrink-0">
+                  <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
+                </svg>
+                <span>Seus dados são verificados e protegidos. Utilizamos criptografia para garantir sua privacidade.</span>
+              </div>
             </div>
             <Field label="CPF" required color="green">
               <input className={INPUT_GREEN} placeholder="000.000.000-00" value={form.cpf}
@@ -429,7 +453,13 @@ export default function CadastroEntregadorPage() {
           <div className="space-y-5">
             <h2 className="text-2xl font-black text-[#1A1A1A]">Envio de documentos</h2>
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 text-xs text-yellow-800 space-y-1">
-              <div className="font-bold">⚠️ Todos os documentos abaixo são obrigatórios</div>
+              <div className="flex items-center gap-2 font-bold">
+                <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="shrink-0">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>Todos os documentos abaixo são obrigatórios</span>
+              </div>
               <div>Os documentos são analisados pela nossa equipe para garantir a segurança de todos. Aceito: PDF, JPG, PNG (máx. 10 MB cada).</div>
             </div>
 
@@ -466,7 +496,12 @@ export default function CadastroEntregadorPage() {
               inputRef={docRefs.selfieDocumento}
             />
             <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-xs text-green-800">
-              📸 <strong>Dica para a selfie:</strong> Segure a CNH aberta próxima ao rosto, em local bem iluminado. Não use filtros ou óculos escuros.
+              <div className="flex items-start gap-2">
+                <svg className="shrink-0 mt-0.5" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" /><circle cx="12" cy="13" r="4" />
+                </svg>
+                <span><strong>Dica para a selfie:</strong> Segure a CNH aberta próxima ao rosto, em local bem iluminado. Não use filtros ou óculos escuros.</span>
+              </div>
             </div>
             <DocUpload
               docKey="comprovanteResidencia"
@@ -485,14 +520,22 @@ export default function CadastroEntregadorPage() {
             <h2 className="text-2xl font-black text-[#1A1A1A]">Criar senha e finalizar</h2>
             <div className="bg-green-50 border border-green-200 rounded-2xl p-5 space-y-3">
               <div className="flex items-center gap-3">
-                <span className="text-xl">⏳</span>
+                <div className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Cadastro sujeito à aprovação</div>
                   <div className="text-xs text-[#666]">Nossa equipe analisa seus documentos em até 3 dias úteis</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xl">📱</span>
+                <div className="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg>
+                </div>
                 <div>
                   <div className="font-bold text-[#1A1A1A] text-sm">Acesso pelo app</div>
                   <div className="text-xs text-[#666]">Após aprovação, baixe o app ObraJá Entregador para receber pedidos</div>
@@ -535,7 +578,7 @@ export default function CadastroEntregadorPage() {
             ? <button onClick={handleNext} className="bg-green-500 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-600 transition-all active:scale-95">Continuar →</button>
             : <button disabled={loading} onClick={handleSubmit}
                 className="bg-green-500 text-white font-bold px-8 py-3 rounded-xl hover:bg-green-600 transition-all active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed">
-                {loading ? 'Enviando cadastro…' : 'Enviar para análise 📤'}
+                {loading ? 'Enviando cadastro…' : 'Enviar para análise'}
               </button>
           }
         </div>
@@ -562,7 +605,11 @@ function DocUpload({ docKey, label, hint, docs, setDoc, inputRef }: {
       {doc.file ? (
         <div className="flex items-center justify-between bg-green-50 rounded-xl px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="text-lg">📄</span>
+            <div className="w-7 h-7 rounded-md bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+              <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
             <span className="text-sm font-medium text-green-700 truncate max-w-[260px]">{doc.file.name}</span>
           </div>
           <button type="button" onClick={() => setDoc(docKey, null)} className="text-xs text-red-400 hover:text-red-600 font-bold ml-2">✕ Remover</button>
@@ -570,7 +617,11 @@ function DocUpload({ docKey, label, hint, docs, setDoc, inputRef }: {
       ) : (
         <button type="button" onClick={() => inputRef.current?.click()}
           className="w-full border-2 border-dashed border-[#E5E5E5] hover:border-green-400 rounded-xl py-5 px-4 text-center transition-all">
-          <div className="text-2xl mb-1">📎</div>
+          <div className="flex justify-center mb-1 text-[#9E9E9E]">
+            <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
           <div className="text-sm font-semibold text-[#9E9E9E]">Clique para selecionar</div>
           <div className="text-xs text-[#9E9E9E] mt-0.5">PDF, JPG ou PNG — máx. 10 MB</div>
         </button>

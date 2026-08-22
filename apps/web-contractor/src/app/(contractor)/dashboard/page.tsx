@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 
 const kpiCards = [
   {
@@ -10,7 +10,7 @@ const kpiCards = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
       </svg>
     ),
-    accent: '#F1591D',
+    accent: '#F05A28',
   },
   {
     label: 'Gasto no Mês',
@@ -56,7 +56,7 @@ const recentOrders = [
 ]
 
 const topSuppliers = [
-  { name: 'Materiais Belo', rating: '4.8', orders: 47, initials: 'MB', color: '#F1591D' },
+  { name: 'Materiais Belo', rating: '4.8', orders: 47, initials: 'MB', color: '#F05A28' },
   { name: 'DepósitoMax', rating: '4.5', orders: 23, initials: 'DM', color: '#3b82f6' },
   { name: 'Construfácil Sul', rating: '4.6', orders: 18, initials: 'CS', color: '#22c55e' },
 ]
@@ -121,7 +121,7 @@ export default function DashboardPage() {
         <Link
           href="/cotacoes"
           className="rounded-xl p-5 flex items-center gap-4 cursor-pointer transition-opacity hover:opacity-90"
-          style={{ background: '#F1591D' }}
+          style={{ background: '#F05A28' }}
         >
           <div
             className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
@@ -182,7 +182,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#F2F2F2' }}>
             <h2 className="font-bold text-base" style={{ color: '#1A1A1A' }}>Pedidos Recentes</h2>
-            <Link href="/pedidos" className="text-sm font-medium hover:underline" style={{ color: '#F1591D' }}>
+            <Link href="/pedidos" className="text-sm font-medium hover:underline" style={{ color: '#F05A28' }}>
               Ver todos
             </Link>
           </div>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
           >
             <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#F2F2F2' }}>
               <h2 className="font-bold text-base" style={{ color: '#1A1A1A' }}>Top Fornecedores</h2>
-              <Link href="/fornecedores" className="text-xs font-medium hover:underline" style={{ color: '#F1591D' }}>
+              <Link href="/fornecedores" className="text-xs font-medium hover:underline" style={{ color: '#F05A28' }}>
                 Ver todos
               </Link>
             </div>
@@ -274,7 +274,7 @@ export default function DashboardPage() {
       <div className="mt-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-bold text-base" style={{ color: '#1A1A1A' }}>Cotações Ativas</h2>
-          <Link href="/cotacoes" className="text-sm font-medium hover:underline" style={{ color: '#F1591D' }}>
+          <Link href="/cotacoes" className="text-sm font-medium hover:underline" style={{ color: '#F05A28' }}>
             Ver todas
           </Link>
         </div>
@@ -331,7 +331,7 @@ export default function DashboardPage() {
                   <Link
                     href="/cotacoes"
                     className="flex-1 py-1.5 rounded-lg text-xs font-semibold text-center transition-opacity hover:opacity-90"
-                    style={{ background: '#F1591D', color: '#fff' }}
+                    style={{ background: '#F05A28', color: '#fff' }}
                   >
                     Aceitar Melhor Preço
                   </Link>

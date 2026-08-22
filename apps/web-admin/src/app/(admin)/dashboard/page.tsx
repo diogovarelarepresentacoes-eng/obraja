@@ -166,7 +166,7 @@ export default function DashboardPage() {
           <div className="divide-y divide-[#F2F2F2]">
             {RECENT_ORDERS.map(o => (
               <div key={o.id} className="flex items-center gap-4 px-6 py-3.5 hover:bg-[#FAFAFA] transition-colors">
-                <span className="text-xs font-mono font-bold text-[#9E9E9E] w-12">{o.id}</span>
+                <span className="text-xs font-bold text-[#9E9E9E] w-12 tracking-tight">{o.id}</span>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-semibold text-[#1A1A1A] truncate">{o.buyer}</div>
                   <div className="text-xs text-[#9E9E9E]">{o.seller}</div>

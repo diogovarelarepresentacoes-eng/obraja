@@ -1,3 +1,6 @@
+﻿'use client'
+
+import { useState } from 'react'
 import type { StoreOrderDisplayStatus } from '@obraja/shared'
 
 type StoreOrder = {
@@ -44,28 +47,34 @@ const orders: StoreOrder[] = [
 ]
 
 export default function PedidosPage() {
+  const [activeTab, setActiveTab] = useState('todos')
+
   return (
     <div className="space-y-5">
       {/* Filter tabs + actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex flex-wrap gap-1">
-          {tabs.map((tab, i) => (
-            <button
-              key={tab.key}
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors border ${
-                i === 0
-                  ? 'bg-[#F1591D] text-white border-[#F1591D]'
-                  : 'bg-white text-[#9E9E9E] border-[#E5E5E5] hover:bg-[#F2F2F2]'
-              }`}
-            >
-              {tab.label}
-              <span className={`ml-1.5 text-xs px-1.5 py-0.5 rounded-full ${
-                i === 0 ? 'bg-white text-[#F1591D]' : 'bg-[#F2F2F2] text-[#9E9E9E]'
-              }`}>
-                {tab.count}
-              </span>
-            </button>
-          ))}
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.key
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors border ${
+                  isActive
+                    ? 'bg-[#F05A28] text-white border-[#F05A28]'
+                    : 'bg-white text-[#9E9E9E] border-[#E5E5E5] hover:bg-[#F2F2F2]'
+                }`}
+              >
+                {tab.label}
+                <span className={`ml-1.5 text-xs px-1.5 py-0.5 rounded-full ${
+                  isActive ? 'bg-white text-[#F05A28]' : 'bg-[#F2F2F2] text-[#9E9E9E]'
+                }`}>
+                  {tab.count}
+                </span>
+              </button>
+            )
+          })}
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -75,10 +84,10 @@ export default function PedidosPage() {
             <input
               type="text"
               placeholder="Buscar pedido ou cliente..."
-              className="pl-9 pr-4 py-2 text-sm border border-[#E5E5E5] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#F1591D] w-64"
+              className="pl-9 pr-4 py-2 text-sm border border-[#E5E5E5] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#F05A28] w-64"
             />
           </div>
-          <button className="px-4 py-2 bg-[#F1591D] text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors whitespace-nowrap">
+          <button className="px-4 py-2 bg-[#F05A28] text-white text-sm font-bold rounded-lg hover:bg-[#CC4010] transition-colors whitespace-nowrap">
             + Novo Pedido Manual
           </button>
         </div>
@@ -152,13 +161,13 @@ export default function PedidosPage() {
         {/* Footer */}
         <div className="px-6 py-4 border-t border-[#E5E5E5] flex items-center justify-between bg-[#F8F8F8]">
           <p className="text-sm font-semibold text-[#1A1A1A]">
-            Total do período: <span className="text-[#F1591D]">R$ 127.450,80</span>
+            Total do período: <span className="text-[#F05A28]">R$ 127.450,80</span>
           </p>
           <div className="flex items-center gap-2">
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">
               ← Anterior
             </button>
-            <span className="px-3 py-1.5 rounded-lg bg-[#F1591D] text-white text-sm font-bold">1</span>
+            <span className="px-3 py-1.5 rounded-lg bg-[#F05A28] text-white text-sm font-bold">1</span>
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">2</button>
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">3</button>
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">

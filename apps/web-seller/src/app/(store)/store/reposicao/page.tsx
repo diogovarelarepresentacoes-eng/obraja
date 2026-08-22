@@ -1,4 +1,5 @@
 import type { ReplenishmentDisplayStatus } from '@obraja/shared'
+import React from 'react'
 
 type ReplenishmentOrder = {
   id: string
@@ -9,27 +10,37 @@ type ReplenishmentOrder = {
   date: string
 }
 
+type CategoryMeta = { color: string; bg: string; icon: React.ReactNode }
+
+const CATEGORY_META: Record<string, CategoryMeta> = {
+  cimento: { color: 'text-stone-700', bg: 'bg-stone-100', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg> },
+  vedantes: { color: 'text-purple-700', bg: 'bg-purple-100', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+  tintas: { color: 'text-rose-700', bg: 'bg-rose-100', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M19 11V6l-4-4H6a2 2 0 00-2 2v12a2 2 0 002 2h6" /><path d="M14 2v4h4" /><path d="M17 15l-3 3 3 3" /><circle cx="19" cy="18" r="2" /><path d="M19 16v-1" /></svg> },
+}
+const DEFAULT_META: CategoryMeta = { color: 'text-gray-600', bg: 'bg-gray-100', icon: <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" /></svg> }
+function getCategoryMeta(key: string): CategoryMeta { return CATEGORY_META[key] ?? DEFAULT_META }
+
 const criticalStock = [
   {
     product: 'Cimento CP-II 50kg',
     current: '45 sacos',
     minimum: '200 sacos',
     supplier: 'Votorantim',
-    emoji: '🏗️',
+    categoryKey: 'cimento',
   },
   {
     product: 'Calafetar 300ml Tigre',
     current: '8 un',
     minimum: '50 un',
     supplier: 'Tigre',
-    emoji: '🔧',
+    categoryKey: 'vedantes',
   },
   {
     product: 'Tinta Acrílica Coral 18L Branco',
     current: '12 latas',
     minimum: '30 latas',
     supplier: 'Coral Tintas',
-    emoji: '🎨',
+    categoryKey: 'tintas',
   },
 ]
 
@@ -90,7 +101,7 @@ export default function ReposicaoPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-[#9E9E9E]">Gerencie pedidos de reposição aos seus fornecedores</p>
-        <button className="px-4 py-2 bg-[#F1591D] text-white text-sm font-bold rounded-lg hover:bg-orange-600 transition-colors">
+        <button className="px-4 py-2 bg-[#F05A28] text-white text-sm font-bold rounded-lg hover:bg-[#CC4010] transition-colors">
           + Novo Pedido
         </button>
       </div>
@@ -109,28 +120,33 @@ export default function ReposicaoPage() {
           </div>
         </div>
         <div className="p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {criticalStock.map((item) => (
-            <div key={item.product} className="bg-red-50 border border-red-200 rounded-lg p-4 flex flex-col gap-3">
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">{item.emoji}</span>
-                <div>
-                  <p className="font-bold text-[#1A1A1A] text-sm leading-tight">{item.product}</p>
-                  <p className="text-xs text-[#9E9E9E] mt-1">
-                    Atual: <span className="text-red-600 font-bold">{item.current}</span>
-                  </p>
-                  <p className="text-xs text-[#9E9E9E]">
-                    Mínimo: {item.minimum}
-                  </p>
-                  <p className="text-xs text-[#9E9E9E]">
-                    Fornecedor: <span className="font-semibold text-[#1A1A1A]">{item.supplier}</span>
-                  </p>
+          {criticalStock.map((item) => {
+            const meta = getCategoryMeta(item.categoryKey)
+            return (
+              <div key={item.product} className="bg-red-50 border border-red-200 rounded-lg p-4 flex flex-col gap-3">
+                <div className="flex items-start gap-3">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${meta.bg} ${meta.color}`}>
+                    {meta.icon}
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#1A1A1A] text-sm leading-tight">{item.product}</p>
+                    <p className="text-xs text-[#9E9E9E] mt-1">
+                      Atual: <span className="text-red-600 font-bold">{item.current}</span>
+                    </p>
+                    <p className="text-xs text-[#9E9E9E]">
+                      Mínimo: {item.minimum}
+                    </p>
+                    <p className="text-xs text-[#9E9E9E]">
+                      Fornecedor: <span className="font-semibold text-[#1A1A1A]">{item.supplier}</span>
+                    </p>
+                  </div>
                 </div>
+                <button className="w-full px-3 py-2 bg-[#F05A28] text-white text-xs font-bold rounded-lg hover:bg-[#CC4010] transition-colors">
+                  Pedir Reposição
+                </button>
               </div>
-              <button className="w-full px-3 py-2 bg-[#F1591D] text-white text-xs font-bold rounded-lg hover:bg-orange-600 transition-colors">
-                Pedir Reposição
-              </button>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
@@ -146,10 +162,10 @@ export default function ReposicaoPage() {
               <input
                 type="text"
                 placeholder="Buscar pedido..."
-                className="pl-8 pr-3 py-1.5 text-sm border border-[#E5E5E5] rounded-lg bg-[#F8F8F8] focus:outline-none focus:ring-2 focus:ring-[#F1591D] w-48"
+                className="pl-8 pr-3 py-1.5 text-sm border border-[#E5E5E5] rounded-lg bg-[#F8F8F8] focus:outline-none focus:ring-2 focus:ring-[#F05A28] w-48"
               />
             </div>
-            <select className="px-3 py-1.5 text-sm border border-[#E5E5E5] rounded-lg bg-[#F8F8F8] focus:outline-none focus:ring-2 focus:ring-[#F1591D] text-[#1A1A1A]">
+            <select className="px-3 py-1.5 text-sm border border-[#E5E5E5] rounded-lg bg-[#F8F8F8] focus:outline-none focus:ring-2 focus:ring-[#F05A28] text-[#1A1A1A]">
               <option>Todos os status</option>
               <option>Aguardando</option>
               <option>Confirmado</option>
@@ -226,7 +242,7 @@ export default function ReposicaoPage() {
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">
               ← Anterior
             </button>
-            <span className="px-3 py-1.5 rounded-lg bg-[#F1591D] text-white text-sm font-bold">1</span>
+            <span className="px-3 py-1.5 rounded-lg bg-[#F05A28] text-white text-sm font-bold">1</span>
             <button className="px-3 py-1.5 rounded-lg border border-[#E5E5E5] text-sm text-[#9E9E9E] hover:bg-white transition-colors">
               Próxima →
             </button>

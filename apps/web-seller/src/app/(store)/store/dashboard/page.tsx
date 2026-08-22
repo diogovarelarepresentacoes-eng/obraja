@@ -1,4 +1,4 @@
-const KpiIcon = ({ type }: { type: string }) => {
+﻿const KpiIcon = ({ type }: { type: string }) => {
   if (type === 'pedidos') return (
     <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
       <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
@@ -62,10 +62,10 @@ const kpis = [
 ]
 
 const statusCards = [
-  { label: 'Aguardando confirmação', count: 6, color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
-  { label: 'Em separação', count: 4, color: 'bg-blue-100 text-blue-800 border-blue-200' },
-  { label: 'Saiu para entrega', count: 3, color: 'bg-orange-100 text-orange-800 border-orange-200' },
-  { label: 'Entregues hoje', count: 5, color: 'bg-green-100 text-green-800 border-green-200' },
+  { label: 'Aguardando confirmação', count: 6, color: 'bg-[#FFFBEB] text-[#92400E] border-[#FDE68A]', dot: '#FFB800' },
+  { label: 'Em separação', count: 4, color: 'bg-blue-50 text-blue-800 border-blue-200', dot: '#3B82F6' },
+  { label: 'Saiu para entrega', count: 3, color: 'bg-[#FFF3EE] text-[#9A3412] border-[#FDBA74]', dot: '#F05A28' },
+  { label: 'Entregues hoje', count: 5, color: 'bg-emerald-50 text-emerald-800 border-emerald-200', dot: '#22C55E' },
 ]
 
 const recentOrders = [
@@ -78,7 +78,7 @@ const recentOrders = [
     status: 'Aguardando',
     statusColor: 'bg-yellow-100 text-yellow-800',
     action: 'Confirmar',
-    actionStyle: 'bg-[#F1591D] text-white hover:bg-orange-600',
+    actionStyle: 'bg-[#F05A28] text-white hover:bg-[#CC4010]',
   },
   {
     id: '#8820',
@@ -186,9 +186,10 @@ export default function StoreDashboardPage() {
       {/* Status row */}
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
         {statusCards.map((s) => (
-          <div key={s.label} className={`rounded-lg border px-4 py-3 flex items-center justify-between ${s.color}`}>
-            <span className="text-sm font-medium">{s.label}</span>
-            <span className="text-2xl font-black">{s.count}</span>
+          <div key={s.label} className={`rounded-lg border px-4 py-3 flex items-center gap-3 ${s.color}`}>
+            <span className="inline-block w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: s.dot }} />
+            <span className="text-sm font-medium flex-1 leading-tight">{s.label}</span>
+            <span className="text-xl font-black shrink-0">{s.count}</span>
           </div>
         ))}
       </div>
@@ -197,7 +198,7 @@ export default function StoreDashboardPage() {
       <div className="bg-white rounded-[10px] border border-[#E5E5E5] overflow-hidden">
         <div className="px-6 py-4 border-b border-[#E5E5E5] flex items-center justify-between">
           <h2 className="text-base font-bold text-[#1A1A1A]">Pedidos Recentes</h2>
-          <a href="/store/pedidos" className="text-sm text-[#F1591D] font-semibold hover:underline">
+          <a href="/store/pedidos" className="text-sm text-[#F05A28] font-semibold hover:underline">
             Ver todos →
           </a>
         </div>
@@ -243,24 +244,31 @@ export default function StoreDashboardPage() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Entregadores */}
         <div className="xl:col-span-2 bg-white rounded-[10px] border border-[#E5E5E5] overflow-hidden">
-          <div className="px-6 py-4 border-b border-[#E5E5E5]">
+          <div className="px-6 py-4 border-b border-[#E5E5E5] flex items-center justify-between">
             <h2 className="text-base font-bold text-[#1A1A1A]">Entregadores</h2>
+            <span className="text-xs text-[#9E9E9E]">
+              {deliverers.filter(d => d.statusType === 'online').length} disponíveis · {deliverers.filter(d => d.statusType === 'away').length} em rota
+            </span>
           </div>
-          <div className="p-4 flex flex-wrap gap-3">
+          <div className="divide-y divide-[#F2F2F2]">
             {deliverers.map((d) => (
-              <div key={d.name} className="flex-1 min-w-[180px] bg-[#F8F8F8] rounded-lg p-4 border border-[#E5E5E5]">
-                <div className="flex items-center gap-2 mb-2">
-                  <StatusDot status={d.statusType} />
-                  <span className="font-semibold text-[#1A1A1A] text-sm">{d.name}</span>
+              <div key={d.name} className="px-6 py-3.5 flex items-center gap-4 hover:bg-[#FAFAFA] transition-colors">
+                <StatusDot status={d.statusType} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-semibold text-[#1A1A1A] text-sm">{d.name}</span>
+                    <span className="text-xs text-[#9E9E9E] truncate">{d.vehicle}</span>
+                  </div>
                 </div>
-                <p className="text-xs text-[#9E9E9E]">{d.vehicle}</p>
-                <p className={`text-xs font-semibold mt-1 ${d.statusColor}`}>{d.status}</p>
-                {d.count !== null && (
-                  <p className="text-xs text-[#9E9E9E] mt-1">{d.count} entregas hoje</p>
-                )}
-                {d.extra && (
-                  <p className="text-xs text-[#9E9E9E] mt-1">{d.extra}</p>
-                )}
+                <div className="text-right shrink-0">
+                  <p className={`text-xs font-semibold ${d.statusColor}`}>{d.status}</p>
+                  {d.count !== null && (
+                    <p className="text-xs text-[#9E9E9E] mt-0.5">{d.count} entrega{d.count !== 1 ? 's' : ''} hoje</p>
+                  )}
+                  {d.extra && (
+                    <p className="text-xs text-[#9E9E9E] mt-0.5">{d.extra}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -295,7 +303,7 @@ export default function StoreDashboardPage() {
                     </p>
                   </div>
                 </div>
-                <a href="/store/reposicao" className="mt-2 inline-block text-xs font-semibold text-[#F1591D] hover:underline">
+                <a href="/store/reposicao" className="mt-2 inline-block text-xs font-semibold text-[#F05A28] hover:underline">
                   Pedir reposição →
                 </a>
               </div>

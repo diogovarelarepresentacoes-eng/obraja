@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 
-const PRIMARY = '#F1591D'
+const PRIMARY = '#F05A28'
 
 const ORDER = {
   id: '#2891',
@@ -146,7 +146,7 @@ export default function PedidoDetailPage() {
                 {ORDER.items.map((item, i) => (
                   <tr key={i} style={{ borderBottom: '1px solid #F8F8F8' }}>
                     <td className="px-6 py-3 text-sm font-semibold" style={{ color: '#1A1A1A' }}>{item.name}</td>
-                    <td className="px-6 py-3 text-xs font-mono" style={{ color: '#9E9E9E' }}>{item.sku}</td>
+                    <td className="px-6 py-3 text-xs text-[#9E9E9E]">{item.sku}</td>
                     <td className="px-6 py-3 text-sm" style={{ color: '#9E9E9E' }}>{item.qty} {item.unit}</td>
                     <td className="px-6 py-3 text-sm" style={{ color: '#9E9E9E' }}>{currency(item.unitPrice)}</td>
                     <td className="px-6 py-3 text-sm font-bold" style={{ color: '#1A1A1A' }}>{currency(item.total)}</td>
@@ -188,7 +188,7 @@ export default function PedidoDetailPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span style={{ color: '#9E9E9E' }}>Nota Fiscal</span>
-                <span className="font-mono font-semibold" style={{ color: '#1A1A1A' }}>{ORDER.nf}</span>
+                <span className="font-semibold text-[#1A1A1A]">{ORDER.nf}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span style={{ color: '#9E9E9E' }}>Vencimento</span>

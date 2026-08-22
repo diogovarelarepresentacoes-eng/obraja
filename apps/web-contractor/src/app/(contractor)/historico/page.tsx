@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
-const PRIMARY = '#F1591D'
+const PRIMARY = '#F05A28'
 
 const MONTHLY = [
   { mes: 'Jan', valor: 142000 },
@@ -171,7 +171,7 @@ export default function HistoricoPage() {
             <tbody>
               {RECENT_ALL.map(r => (
                 <tr key={r.id} className="hover:bg-gray-50 transition-colors" style={{ borderBottom: '1px solid #F8F8F8' }}>
-                  <td className="px-6 py-3 text-sm font-mono font-bold" style={{ color: '#1A1A1A' }}>{r.id}</td>
+                  <td className="px-6 py-3 text-sm font-bold text-[#1A1A1A]">{r.id}</td>
                   <td className="px-6 py-3 text-sm" style={{ color: '#666' }}>{r.supplier}</td>
                   <td className="px-6 py-3 text-xs" style={{ color: '#9E9E9E' }}>{r.cat}</td>
                   <td className="px-6 py-3 text-sm font-bold" style={{ color: '#1A1A1A' }}>{currency(r.value)}</td>

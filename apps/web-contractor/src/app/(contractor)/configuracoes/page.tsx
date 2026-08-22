@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
-const PRIMARY = '#F1591D'
+const PRIMARY = '#F05A28'
 
 export default function ConfiguracoesPage() {
   const [activeTab, setActiveTab] = useState<'empresa' | 'contato' | 'notificacoes' | 'pagamento' | 'usuarios'>('empresa')

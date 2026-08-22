@@ -1,4 +1,4 @@
-import type { DeliveryDisplayStatus } from '@obraja/shared'
+﻿import type { DeliveryDisplayStatus } from '@obraja/shared'
 
 type FleetMember = {
   name: string
@@ -202,7 +202,7 @@ export default function EntregasPage() {
                     <td className="px-4 py-3 text-[#1A1A1A]">
                       {f.vehicle} <span className="text-[#9E9E9E] text-xs">({f.type})</span>
                     </td>
-                    <td className="px-4 py-3 font-mono text-[#9E9E9E] text-xs">{f.plate}</td>
+                    <td className="px-4 py-3 text-[#9E9E9E] text-xs">{f.plate}</td>
                     <td className="px-4 py-3">
                       <span className={`text-sm font-semibold flex items-center ${st.textColor}`}>
                         <StatusDot status={f.status} />{st.label}

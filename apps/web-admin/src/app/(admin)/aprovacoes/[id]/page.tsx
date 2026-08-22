@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -294,9 +294,17 @@ export default function AprovacaoDetailPage({ params }: { params: { id: string }
             {d.docs.map((doc, i) => (
               <div key={i} className={`flex items-center justify-between p-4 rounded-xl border ${DOC_STATUS_STYLE[doc.status]}`}>
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">
-                    {doc.filename.endsWith('.pdf') ? '📄' : '🖼️'}
-                  </span>
+                  <div className="w-8 h-8 rounded-lg bg-[#F8F8F8] border border-[#E5E5E5] flex items-center justify-center shrink-0 text-[#9E9E9E]">
+                    {doc.filename.endsWith('.pdf') ? (
+                      <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+                      </svg>
+                    )}
+                  </div>
                   <div>
                     <div className="font-semibold text-sm">{doc.label}</div>
                     <div className="text-xs opacity-70">{doc.filename}</div>
@@ -323,7 +331,13 @@ export default function AprovacaoDetailPage({ params }: { params: { id: string }
 
         {isDelivery && (
           <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-3 text-xs text-yellow-800">
-            <strong>⚠️ Checklist para entregadores:</strong> Verifique se CNH está dentro da validade, CRLV com data vigente, selfie com rosto visível e documento legível, comprovante de residência nos últimos 90 dias.
+            <div className="flex items-start gap-2">
+              <svg className="shrink-0 mt-0.5" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                <line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              <span><strong>Checklist para entregadores:</strong> Verifique se CNH está dentro da validade, CRLV com data vigente, selfie com rosto visível e documento legível, comprovante de residência nos últimos 90 dias.</span>
+            </div>
           </div>
         )}
       </div>
@@ -365,7 +379,7 @@ function InfoItem({ label, value, mono }: { label: string; value: string; mono?:
   return (
     <div>
       <dt className="text-xs text-[#9E9E9E] font-medium">{label}</dt>
-      <dd className={`text-sm font-semibold text-[#1A1A1A] mt-0.5 ${mono ? 'font-mono' : ''}`}>{value}</dd>
+      <dd className={"text-sm font-semibold text-[#1A1A1A] mt-0.5"}>{value}</dd>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -97,7 +97,7 @@ export default function CotacoesPage() {
         <button
           onClick={() => setShowForm((v) => !v)}
           className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
-          style={{ background: '#F1591D', color: '#fff' }}
+          style={{ background: '#F05A28', color: '#fff' }}
         >
           <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -110,7 +110,7 @@ export default function CotacoesPage() {
       {showForm && (
         <div
           className="rounded-xl mb-6 overflow-hidden"
-          style={{ background: '#fff', border: '2px solid #F1591D' }}
+          style={{ background: '#fff', border: '2px solid #F05A28' }}
         >
           <div
             className="px-6 py-4 flex items-center justify-between"
@@ -160,7 +160,7 @@ export default function CotacoesPage() {
                 <button
                   onClick={addItem}
                   className="text-xs font-semibold flex items-center gap-1"
-                  style={{ color: '#F1591D' }}
+                  style={{ color: '#F05A28' }}
                 >
                   <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
@@ -212,7 +212,7 @@ export default function CotacoesPage() {
             <div className="flex items-center gap-3">
               <button
                 className="px-6 py-2.5 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
-                style={{ background: '#F1591D', color: '#fff' }}
+                style={{ background: '#F05A28', color: '#fff' }}
               >
                 Enviar para Fornecedores
               </button>
@@ -249,7 +249,7 @@ export default function CotacoesPage() {
               className="text-xs rounded-full px-1.5 py-0.5"
               style={
                 activeTab === i
-                  ? { background: '#F1591D', color: '#fff' }
+                  ? { background: '#F05A28', color: '#fff' }
                   : { background: '#E5E5E5', color: '#9E9E9E' }
               }
             >
@@ -313,7 +313,7 @@ export default function CotacoesPage() {
                     <li key={item.name} className="flex items-center gap-2 text-sm" style={{ color: '#1A1A1A' }}>
                       <span
                         className="w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ background: '#F1591D' }}
+                        style={{ background: '#F05A28' }}
                       />
                       {item.name} — <span className="font-semibold">{item.qty} {item.unit}</span>
                     </li>
@@ -371,7 +371,7 @@ export default function CotacoesPage() {
                             <td className="px-5 py-3 text-center">
                               <button
                                 className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-opacity hover:opacity-90"
-                                style={{ background: '#F1591D', color: '#fff' }}
+                                style={{ background: '#F05A28', color: '#fff' }}
                               >
                                 Aceitar
                               </button>
@@ -384,7 +384,7 @@ export default function CotacoesPage() {
                   <div className="flex items-center gap-3">
                     <button
                       className="px-5 py-2 rounded-lg font-semibold text-sm transition-opacity hover:opacity-90"
-                      style={{ background: '#F1591D', color: '#fff' }}
+                      style={{ background: '#F05A28', color: '#fff' }}
                     >
                       Aceitar Melhor Preço
                     </button>

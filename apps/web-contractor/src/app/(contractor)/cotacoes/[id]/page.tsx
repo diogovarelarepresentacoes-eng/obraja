@@ -1,9 +1,9 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
 
-const PRIMARY = '#F1591D'
+const PRIMARY = '#F05A28'
 
 const QUOTE = {
   id: '#Q-041',
